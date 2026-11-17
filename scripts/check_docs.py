@@ -26,7 +26,6 @@ TOP_LEVEL_DOCS = (
 )
 COMMUNITY_DOCS = (
     ".github/CONTRIBUTING.md",
-    ".github/CODE_OF_CONDUCT.md",
     ".github/SECURITY.md",
 )
 REQUIRED_DOCS = (

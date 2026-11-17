@@ -17,15 +17,15 @@ src/
 tests/
 scripts/
 docs/
-.github/            # workflows, templates, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md
+.github/            # workflows, issue templates, CONTRIBUTING.md, SECURITY.md
 dirsearch.py
 single_403pass.py
 swagger.py
 ```
 
 .github/workflows/ci.yml` runs the required test, documentation, asset and hygiene
-checks. Community files (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`) live
-under `.github/`.
+checks. Community files (`CONTRIBUTING.md` and the merged security + conduct policy in
+`SECURITY.md`) live under `.github/`.
 
 ## Package layout
 

@@ -15,7 +15,8 @@ the spirit of Keep a Changelog, and versions use PEP 440.
   surface.
 - Rewrote the README with a capability map, scenario table, configuration summary and a
   documentation index.- Dropped the README version marker; `pyproject.toml` is the single source of truth and
-  `check_docs` only cross-checks the marker when a README still declares one.
+  `check_docs` only cross-checks the marker when a README still declares one.- Merged the code of conduct into `.github/SECURITY.md` and the pull request template into
+  `.github/CONTRIBUTING.md`, leaving four community files under `.github/`.
 - Made the `Path.cwd().parent` temporary fallback opt-in via `SURFACESCOPE_ALLOW_CWD_PARENT_TMP=1`,
   so restricted environments no longer scatter `surfacescope-*` directories beside the
   project by default.
