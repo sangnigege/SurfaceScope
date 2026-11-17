@@ -1,7 +1,6 @@
 # SurfaceScope
 
 > 一个工具完成 Web 攻击面评估
-
 > 目录发现 → JS/API 提取 → 指纹识别 → 403/401 复核 → Swagger 分析 → Packer 分析 → 统一报告
 
 [![ci](https://github.com/sangnigege/SurfaceScope/actions/workflows/ci.yml/badge.svg)](https://github.com/sangnigege/SurfaceScope/actions/workflows/ci.yml)
@@ -59,22 +58,11 @@ surfacescope -u https://example.com/
 surfacescope -u https://example.com/ --all
 ```
 
-### 常用场景
-
-| 我想做什么 | 命令 |
-|---|---|
-| 只看有哪些组件和资产 | `surfacescope --list-components` / `--list-assets` |
-| 指定字典、扩展名和并发 | `surfacescope -u <url> --wordlist paths --extensions php,aspx,jsp --threads 25` |
-| 复核某个目录的 403 | `surfacescope -u <url>/admin --components bypass403 --bypass --bypass-mode fast` |
-| 一次拿到四种格式报告 | `surfacescope -u <url> --format json,markdown,html,csv --output reports` |
-| 用配置文件跑 | `surfacescope -u <url> --config .\surfacescope.toml --no-env` |
-
 ## 能力
 
 ### 为什么用它
 
-传统做法是把 dirsearch、JSFinder、指纹工具、403 绕过脚本、Swagger 扫描器各跑一遍，再手工拼报告。
-SurfaceScope 把这些能力收口到一个包里，共享同一套请求执行器、请求画像、结果模型和报告出口：
+对 Web 服务进行信息收集时，往往把 dirsearch、JSFinder、指纹工具、403 绕过脚本、Swagger 扫描器各跑一遍，再手工拼报告。而SurfaceScope 把这些能力收口到一个包里，共享同一套请求执行器、请求画像、结果模型和报告出口：
 
 | 痛点 | 传统做法 | SurfaceScope |
 |---|---|---|
@@ -106,6 +94,16 @@ flowchart LR
 | 403/401 复核 | `quick` / `fast` / `balanced` / `full` 四种预算模式 | 关闭 |
 | Swagger/OpenAPI | Swagger 2、OpenAPI 3.0/3.1、本地 `$ref` 和只读请求生成 | 关闭 |
 | Packer/webpack | chunk、API、secret、upload surface、CORS 和匿名访问分析 | 关闭 |
+
+### 常用场景
+
+| 我想做什么 | 命令 |
+|---|---|
+| 只看有哪些组件和资产 | `surfacescope --list-components` / `--list-assets` |
+| 指定字典、扩展名和并发 | `surfacescope -u <url> --wordlist paths --extensions php,aspx,jsp --threads 25` |
+| 复核某个目录的 403 | `surfacescope -u <url>/admin --components bypass403 --bypass --bypass-mode fast` |
+| 一次拿到四种格式报告 | `surfacescope -u <url> --format json,markdown,html,csv --output reports` |
+| 用配置文件跑 | `surfacescope -u <url> --config .\surfacescope.toml --no-env` |
 
 ### 403/401 复核
 
