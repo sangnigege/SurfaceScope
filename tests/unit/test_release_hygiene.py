@@ -48,3 +48,15 @@ def test_release_hygiene_accepts_public_source_paths() -> None:
             "tests/unit/test_release_hygiene.py",
         ]
     ) == []
+
+
+def test_release_hygiene_requires_complete_public_delivery_surface() -> None:
+    required = set(check_release_hygiene.REQUIRED_PUBLIC_PATHS)
+
+    assert {
+        ".github/workflows/ci.yml",
+        ".github/SECURITY.md",
+        ".github/CONTRIBUTING.md",
+        ".github/CODE_OF_CONDUCT.md",
+        "docs/PROJECT_STRUCTURE.md",
+    } <= required

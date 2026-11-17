@@ -3,6 +3,17 @@
 All notable user-facing changes to SurfaceScope are recorded here. The format follows
 the spirit of Keep a Changelog, and versions use PEP 440.
 
+## Unreleased
+
+### Changed
+
+- Consolidated `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` and the security policy under
+  `.github/`; the repository root now keeps only `README.md`, `CHANGELOG.md` and
+  `NOTICE.md`.
+- Dropped the third-party license file in favour of the attribution table in `NOTICE.md`.
+- Removed the optional container build and the CodeQL workflow from the public delivery
+  surface.
+
 ## 0.2.0 - 2026-11-16
 
 ### Added

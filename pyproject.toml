@@ -43,6 +43,13 @@ surfacescope = "surfacescope.cli:main"
 sscope = "surfacescope.cli:main"
 dsbp = "surfacescope.cli:main"
 
+[project.urls]
+Homepage = "https://github.com/sangnigege/SurfaceScope"
+Repository = "https://github.com/sangnigege/SurfaceScope"
+Documentation = "https://github.com/sangnigege/SurfaceScope/tree/main/docs"
+Issues = "https://github.com/sangnigege/SurfaceScope/issues"
+Changelog = "https://github.com/sangnigege/SurfaceScope/blob/main/CHANGELOG.md"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 include-package-data = true

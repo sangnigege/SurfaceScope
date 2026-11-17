@@ -38,13 +38,18 @@ FORBIDDEN_SUFFIXES = (
 REQUIRED_PUBLIC_PATHS = (
     "README.md",
     "CHANGELOG.md",
-    "CONTRIBUTING.md",
-    "CODE_OF_CONDUCT.md",
-    "SECURITY.md",
     "NOTICE.md",
-    "THIRD_PARTY_LICENSES.txt",
     "pyproject.toml",
+    ".editorconfig",
+    ".gitattributes",
+    ".gitignore",
+    "dirsearch.py",
+    "single_403pass.py",
+    "swagger.py",
     "src/surfacescope/__init__.py",
+    ".github/SECURITY.md",
+    ".github/CONTRIBUTING.md",
+    ".github/CODE_OF_CONDUCT.md",
     ".github/workflows/ci.yml",
     ".github/dependabot.yml",
     ".github/pull_request_template.md",
@@ -54,9 +59,8 @@ REQUIRED_PUBLIC_PATHS = (
     "docs/CLI_REFERENCE.md",
     "docs/COMPATIBILITY.md",
     "docs/DEVELOPMENT.md",
-    "docs/SECURITY.md",
+    "docs/PROJECT_STRUCTURE.md",
 )
-
 
 def _git_paths(*args: str) -> list[str]:
     result = subprocess.run(

@@ -8,11 +8,7 @@ document describes the files distributed in the public repository.
 ```text
 README.md
 CHANGELOG.md
-CONTRIBUTING.md
-CODE_OF_CONDUCT.md
-SECURITY.md
 NOTICE.md
-THIRD_PARTY_LICENSES.txt
 pyproject.toml
 .editorconfig
 .gitattributes
@@ -21,11 +17,15 @@ src/
 tests/
 scripts/
 docs/
-.github/
+.github/            # workflows, templates, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md
 dirsearch.py
 single_403pass.py
 swagger.py
 ```
+
+.github/workflows/ci.yml` runs the required test, documentation, asset and hygiene
+checks. Community files (`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`) live
+under `.github/`.
 
 ## Package layout
 
@@ -87,7 +87,7 @@ tests/
 ```
 
 Network tests use loopback servers. Do not scan real targets in tests or CI. The suite
-collects 255 tests at the time of this release.
+collects 256 tests at the time of this release.
 
 ## Assets
 

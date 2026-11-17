@@ -66,7 +66,7 @@ consumer 可导入性和 canonical 关系。发布前还要在仓库外安装 wh
 - 403 载荷目录来自 `sangnigege/bypass403@d465f2d3`，只导入载荷数据；
 - 请求画像来自 Chrome for Testing Stable `157.0.8103.78` 的 reduced UA/Client Hints，
   作为项目维护资产；HTTPS-only Client Hints 由执行器控制；
-- Packer-Fuzzer 的来源记录在 `NOTICE.md`、`THIRD_PARTY_LICENSES.txt`。
+- Packer-Fuzzer 的来源记录在 `NOTICE.md`。
 
 旧根目录 `db/`、`ehole/` 已移出工作区；它们的规范副本已登记在 manifest 的 `source_refs`。
 这不是删除来源证据，而是避免运行时出现两份可漂移的资产。

@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Do not include real credentials, client data or third-party scan results.
-        For a vulnerability in SurfaceScope itself, use SECURITY.md instead.
+        For a vulnerability in SurfaceScope itself, use .github/SECURITY.md instead.
   - type: input
     id: version
     attributes:

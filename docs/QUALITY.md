@@ -24,10 +24,10 @@ Run it with:
 .\.venv\Scripts\python -m pytest -q -p no:cacheprovider
 ```
 
-The current source tree collects 255 tests and passes on Windows Python 3.10–3.14 and
-Ubuntu/WSL Python 3.10.12. CI runs the required checks on Ubuntu with Python 3.12; the
-wider Windows/Linux multi-version matrix is executed locally when needed, and a local
-pass is not a substitute for the first successful Actions run.
+The current source tree collects 256 tests and passes on Windows Python 3.10–3.14 and
+Ubuntu/WSL Python 3.10.12 and 3.14.10. CI runs the required checks on Ubuntu with Python
+3.12; the current `main` workflow is green. The wider Windows/Linux multi-version matrix
+is executed locally when needed, and a local pass is not a substitute for CI.
 
 ## Coverage
 

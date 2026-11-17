@@ -22,13 +22,16 @@ FENCE = "```"
 TOP_LEVEL_DOCS = (
     "README.md",
     "CHANGELOG.md",
-    "CONTRIBUTING.md",
-    "CODE_OF_CONDUCT.md",
-    "SECURITY.md",
     "NOTICE.md",
+)
+COMMUNITY_DOCS = (
+    ".github/CONTRIBUTING.md",
+    ".github/CODE_OF_CONDUCT.md",
+    ".github/SECURITY.md",
 )
 REQUIRED_DOCS = (
     *TOP_LEVEL_DOCS,
+    *COMMUNITY_DOCS,
     "docs/QUICKSTART.md",
     "docs/CLI_REFERENCE.md",
     "docs/CONFIGURATION.md",
@@ -42,7 +45,6 @@ REQUIRED_DOCS = (
     "docs/TROUBLESHOOTING.md",
     "docs/DEVELOPMENT.md",
     "docs/PROJECT_STRUCTURE.md",
-    "docs/SECURITY.md",
 )
 PRIVATE_MARKERS = (
     "surface-scope-evidence",

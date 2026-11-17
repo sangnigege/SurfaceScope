@@ -8,8 +8,8 @@ toolchain, a browser driver or a component-local virtual environment.
 | Item | Value |
 |---|---|
 | Declared minimum | Python `3.10` |
-| Verified locally | Windows Python `3.10`–`3.14`; Linux/WSL Python `3.10` |
-| CI matrix | Windows and Linux, Python `3.10`–`3.14` (first Actions run pending) |
+| Verified locally | Windows Python `3.10`–`3.14`; Linux/WSL Python `3.10` and `3.14` |
+| CI matrix | Ubuntu Linux, Python `3.12` (required release checks; current `main` is green) |
 | Package type | `py3-none-any` wheel |
 | Extensions | No C/Rust extension modules |
 
@@ -21,8 +21,8 @@ window. Support for 3.8 and 3.9 is not provided.
 
 | Environment | Status | Notes |
 |---|---|---|
-| Windows 11 | Verified locally | Python 3.10–3.14, 255 tests on each version |
-| Linux/WSL | Verified locally | Ubuntu/WSL Python 3.10.12, 255 tests; CI runs the required checks on Python 3.12 |
+| Windows 11 | Verified locally | Python 3.10–3.14, 256 tests on each version |
+| Linux/WSL | Verified locally | Ubuntu/WSL Python 3.10.12 and 3.14.10, 256 tests; CI runs the required checks on Python 3.12 |
 | macOS | Not verified | Code is platform-neutral, but no native macOS validation is claimed |
 
 Platform code uses `pathlib`, explicit UTF-8, `sys.executable` and temporary directories.
@@ -108,8 +108,8 @@ must be a separately documented and tested backend.
   every upstream CLI option or output mode;
 - Packer analysis is not a full dynamic equivalent of every upstream vulnerability type;
 - real-target 403 hit rates and false-positive rates require target-specific validation;
-- macOS and GitHub Actions are not claimed as verified until they run in
-  the target environment;
+- macOS is not verified; GitHub Actions currently covers Ubuntu Linux Python 3.12,
+  while the wider version matrix is verified locally;
 - Raw absolute-URI requests, duplicate request headers, CL/TE desynchronization and
   HTTP/1.0 downgrade are outside the default executor boundary;
 - reproducible byte-for-byte builds and SBOM/signature publication are not yet claimed.

@@ -16,8 +16,7 @@ no upstream source code is copied into this repository.
 SurfaceScope is an independent implementation: it does not copy source code from
 the projects listed above. The references record the ideas, algorithms, asset formats
 and rule sets that informed the work, and the upstream project names and links are
-listed for attribution only. A short third-party notice is kept in
-`THIRD_PARTY_LICENSES.txt`.
+listed for attribution only.
 
 The 403 payload snapshot is executed by the project-owned catalog/adapter, not by
 importing upstream code. Its supported boundary is the unified `requests`

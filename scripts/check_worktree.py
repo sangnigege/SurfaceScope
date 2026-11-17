@@ -44,7 +44,6 @@ SCOPE_FILES = frozenset(
         ".gitattributes",
         ".editorconfig",
         "NOTICE.md",
-        "THIRD_PARTY_LICENSES.txt",
         "dirsearch.py",
         "single_403pass.py",
         "swagger.py",

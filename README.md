@@ -122,8 +122,8 @@ docs/              # 用户文档、开发文档和兼容性说明
 
 ## 兼容性
 
-- Python `>= 3.10`；本地已验证 Windows 3.10–3.14 与 Linux/WSL 3.10，CI 配置覆盖
-  Windows/Linux × Python 3.10–3.14；
+- Python `>= 3.10`；本地已验证 Windows 3.10–3.14 与 Linux/WSL 3.10/3.14，CI 在
+  Ubuntu Linux 3.12 上运行发布门禁；
 - 纯 Python wheel，不包含 Rust/C 扩展，不需要目标平台编译；
 - Windows 和 Linux 使用 `pathlib`、显式 UTF-8、临时目录和 `sys.executable`；
 - macOS 尚未完成原生验证，不宣称已支持；
@@ -141,7 +141,7 @@ docs/              # 用户文档、开发文档和兼容性说明
 .\.venv\Scripts\python scripts\check_docs.py
 ```
 
-贡献流程、测试边界和发布检查见 `CONTRIBUTING.md` 与 `docs/DEVELOPMENT.md`。网络测试只能
+贡献流程、测试边界和发布检查见 `.github/CONTRIBUTING.md` 与 `docs/DEVELOPMENT.md`。网络测试只能
 使用 loopback fixture，不要在单元/契约/CI 中扫描真实目标。
 
 ## 文档
@@ -158,11 +158,10 @@ docs/              # 用户文档、开发文档和兼容性说明
 - `docs/NAMING.md`：品牌、包名、CLI 和环境变量
 - `docs/TROUBLESHOOTING.md`：常见问题
 - `docs/DEVELOPMENT.md`：开发和发布检查
-- `docs/SECURITY.md`：授权使用、默认安全和数据处理
+- `.github/SECURITY.md`：漏洞报告、授权使用、默认安全和数据处理
 - `CHANGELOG.md`：版本变更
 
 ## 来源与致谢
 
-第三方来源、本地处理和资产来源记录在 `NOTICE.md`、`THIRD_PARTY_LICENSES.txt` 以及
-`src/surfacescope/assets/manifest.json`。SurfaceScope 不依赖上游仓库的运行时目录或
+第三方来源与致谢记录在 `NOTICE.md` 和 `src/surfacescope/assets/manifest.json`。SurfaceScope 不依赖上游仓库的运行时目录或
 组件 checkout。
