@@ -55,6 +55,8 @@ REQUIRED_PUBLIC_PATHS = (
     ".github/pull_request_template.md",
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/feature_request.yml",
+    "scripts/README.md",
+    "tests/README.md",
     "docs/QUICKSTART.md",
     "docs/CLI_REFERENCE.md",
     "docs/COMPATIBILITY.md",
