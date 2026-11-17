@@ -105,6 +105,7 @@ class Bypass403Adapter(ComponentAdapter):
         generated_variants = 0
         escalated_targets = 0
         network_before = context.executor.audit.counts().get("network_sent", 0)
+        progress = getattr(context, "progress", None)
 
         for target in targets:
             target_key = (target.url, target.identity)
@@ -259,6 +260,8 @@ class Bypass403Adapter(ComponentAdapter):
                     continue
 
                 tested += 1
+                if progress is not None:
+                    progress("bypass403", tested, max(planned_variants, tested))
                 context.results.add_snapshot(candidate)
                 matches_soft404 = soft404 is not None and qc.is_soft_404(candidate, soft404)
                 if (

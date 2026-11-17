@@ -97,6 +97,8 @@ class PackerAdapter(ComponentAdapter):
             queue = deque(document.scripts)
             fetched_assets = 0
             source_maps_seen = 0
+            progress = getattr(context, "progress", None)
+            asset_budget = max_assets * max(1, len(targets))
             while queue and fetched_assets < max_assets and assets_count < max_assets * max(1, len(targets)):
                 asset_url = queue.popleft()
                 asset_key = (target.identity, target.auth_scope, canonical_url(asset_url))
@@ -127,6 +129,8 @@ class PackerAdapter(ComponentAdapter):
                 context.results.add_snapshot(asset)
                 fetched_assets += 1
                 assets_count += 1
+                if progress is not None:
+                    progress("packer", assets_count, asset_budget)
                 self._append_once(
                     result,
                     seen_findings,

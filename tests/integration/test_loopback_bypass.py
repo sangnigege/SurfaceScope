@@ -96,3 +96,27 @@ def test_loopback_bypass_uniform_denial_skips_root_calibration() -> None:
         server.shutdown()
         server.server_close()
         thread.join(timeout=2)
+
+def test_loopback_bypass_reports_variant_progress() -> None:
+    server, thread = _server()
+    events: list[tuple[str, int, int]] = []
+    try:
+        base = f"http://127.0.0.1:{server.server_port}"
+        context, executor, _, _ = pipeline.create_context(
+            include_env=False,
+            artifact_root=None,
+            progress=lambda name, done, total: events.append((name, done, total)),
+        )
+        try:
+            Bypass403Adapter().scan(context, [Target(url=base + "/admin")], {"mode": "fast"})
+        finally:
+            executor.close()
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=2)
+
+    assert events, "bypass403 did not report progress"
+    assert all(name == "bypass403" for name, _, _ in events)
+    assert events[-1][1] >= 1
+    assert all(total >= done for _, done, total in events)

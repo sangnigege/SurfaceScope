@@ -11,8 +11,8 @@ the spirit of Keep a Changelog, and versions use PEP 440.
   stage finishes instead of appearing all at once at the end.
 - `finger` findings render as an aligned table (`STATUS / CONF / TECHNOLOGY / SOURCES /
   EVIDENCE / TARGET`); `dirsearch` findings print paths relative to their target.
-- Live progress heartbeat on stderr, enabled by default on a TTY (`--no-progress`,
-  `--progress-interval`).
+- Live progress heartbeat on stderr for the `dirsearch`, `bypass403` and `packer` stages,
+  enabled by default on a TTY (`--no-progress`, `--progress-interval`).
 - `--check-update` reports the newest published tag and the upgrade command for the detected
   install method; it never installs anything.
 ### Changed
