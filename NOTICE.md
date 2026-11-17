@@ -1,8 +1,7 @@
 # Source and attribution notice
 
 This repository combines a project-owned scanning pipeline with algorithms, rule
-sets and data informed by the sources below. Each project is credited with its origin;
-no upstream source code is copied into this repository.
+sets and data informed by the sources below. Each project is credited with its origin.
 
 | Component or data | Upstream / origin | Local treatment |
 |---|---|---|
@@ -13,8 +12,7 @@ no upstream source code is copied into this repository.
 | Swagger/OpenAPI | [swagger-exp](https://github.com/lijiejie/swagger-exp) and [swagger-hack](https://github.com/jayus0821/swagger-hack) parsing and request-generation ideas | Parser/request generation only; no browser UI, ChromeDriver or Excel writer |
 | Packer analysis | [Packer-Fuzzer](https://github.com/rtcatc/Packer-Fuzzer) | Core analysis is folded into the Python package; no SQLite/CWD stage bus, component venv, browser, or runtime clone |
 
-SurfaceScope is an independent implementation: it does not copy source code from
-the projects listed above. The references record the ideas, algorithms, asset formats
+SurfaceScope is an independent implementation. The references record the ideas, algorithms, asset formats
 and rule sets that informed the work, and the upstream project names and links are
 listed for attribution only.
 
