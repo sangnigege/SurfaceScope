@@ -141,7 +141,7 @@ Session、请求预算和审计；`max_redirects` 控制跳数上限（默认 10
 
 ```json
 {
-  "url": "https://authorized.example/",
+  "url": "https://example.com/",
   "scope": "customer-a",
   "headers": {"Authorization": "Bearer A"},
   "cookies": {"session": "A"},

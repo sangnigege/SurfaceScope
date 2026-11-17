@@ -49,7 +49,7 @@ of empty lines, deduplicated and checked by `tests/unit/test_assets.py`.
 Status range example:
 
 ```powershell
-surfacescope --include-statuses 200-204,301,304 --exclude-statuses 400,404-410 https://authorized.example/
+surfacescope --include-statuses 200-204,301,304 --exclude-statuses 400,404-410 https://example.com/
 ```
 
 ## Known differences

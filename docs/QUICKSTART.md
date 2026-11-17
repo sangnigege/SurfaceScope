@@ -23,7 +23,7 @@ surfacescope --dry-run --no-env http://127.0.0.1:8000/
 确认输出中的 components、profile、asset_count 和请求预算后，再运行真实目标：
 
 ```powershell
-surfacescope -u "https://authorized.example/" -o reports --format json,md,html
+surfacescope -u "https://example.com/" -o reports --format json,md,html
 ```
 
 默认组件是 `dirsearch,jsfinder,finger`。默认不做 403 绕过、Packer 主动探测或 Swagger 危险方法。
@@ -33,22 +33,22 @@ surfacescope -u "https://authorized.example/" -o reports --format json,md,html
 
 ```powershell
 # 403/401 review
-surfacescope -u "https://authorized.example/admin" --components bypass403 --bypass
+surfacescope -u "https://example.com/admin" --components bypass403 --bypass
 
 # Swagger/OpenAPI
-surfacescope -u "https://authorized.example/" --components dirsearch,swagger --swagger
+surfacescope -u "https://example.com/" --components dirsearch,swagger --swagger
 
 # Packer passive analysis
-surfacescope -u "https://authorized.example/" --components dirsearch,packer --packer
+surfacescope -u "https://example.com/" --components dirsearch,packer --packer
 
 # Packer GET/API probe, explicit opt-in
-surfacescope -u "https://authorized.example/" --components dirsearch,packer --packer --packer-probe
+surfacescope -u "https://example.com/" --components dirsearch,packer --packer --packer-probe
 ```
 
 全部阶段的安全默认组合：
 
 ```powershell
-surfacescope -u "https://authorized.example/" --all
+surfacescope -u "https://example.com/" --all
 ```
 
 `--all` 启用 `dirsearch,jsfinder,finger,bypass403,swagger,packer`，但不会把 403 切到
@@ -61,8 +61,8 @@ surfacescope -u "https://authorized.example/" --all
 ```json
 {
   "targets": [
-    {"url": "https://authorized.example/", "scope": "user-a", "headers": {"Authorization": "Bearer A"}},
-    {"url": "https://authorized.example/", "scope": "user-b", "headers": {"Authorization": "Bearer B"}}
+    {"url": "https://example.com/", "scope": "user-a", "headers": {"Authorization": "Bearer A"}},
+    {"url": "https://example.com/", "scope": "user-b", "headers": {"Authorization": "Bearer B"}}
   ]
 }
 ```

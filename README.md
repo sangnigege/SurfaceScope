@@ -76,13 +76,13 @@ Linux/WSL 用 `.venv/bin/python` 和 `.venv/bin/surfacescope`。
 
 ```powershell
 # 1. 先干跑，确认目标、组件和预算，不发任何扫描请求
-surfacescope -u https://authorized.example/ --all --dry-run --no-env
+surfacescope -u https://example.com/ --all --dry-run --no-env
 
 # 2. 默认只跑低风险三件套：目录发现 + JS 提取 + 指纹
-surfacescope -u https://authorized.example/
+surfacescope -u https://example.com/
 
 # 3. 确认授权后再开全部阶段（403 仍用 fast，写方法/SQLi/unsafe Packer 不会自动开）
-surfacescope -u https://authorized.example/ --all
+surfacescope -u https://example.com/ --all
 ```
 
 ## 常用场景
@@ -112,7 +112,7 @@ surfacescope -u https://authorized.example/ --all
 ## 报告
 
 ```powershell
-surfacescope -u https://authorized.example/ --format json,markdown,html,csv --output reports
+surfacescope -u https://example.com/ --format json,markdown,html,csv --output reports
 ```
 
 所有格式共用同一个 `Finding` schema 和原子写入逻辑：先写临时文件再替换，失败不会留下半份结果。
@@ -125,7 +125,7 @@ surfacescope -u https://authorized.example/ --format json,markdown,html,csv --ou
 ```powershell
 $env:SURFACESCOPE_THREADS = '25'
 $env:SURFACESCOPE_TIMEOUT = '10'
-surfacescope -u https://authorized.example/ --config .\surfacescope.toml --no-env
+surfacescope -u https://example.com/ --config .\surfacescope.toml --no-env
 ```
 
 默认请求画像接近现代桌面 Chromium 的应用层语义：固定 UA/Client Hints、按用途设置 `Accept`、
