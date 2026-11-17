@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-11-17",
+  "environment": {
+    "os": "linux",
+    "python": "3.10.12",
+    "branch_coverage": "true"
+  },
+  "coverage": {
+    "overall_percent": 79.53,
+    "num_statements": 4848,
+    "num_branches": 1732,
+    "modules": {
+      "src/surfacescope/adapters/base.py": {
+        "percent": 81.03,
+        "statements": 44
+      },
+      "src/surfacescope/adapters/bypass403_adapter.py": {
+        "percent": 81.12,
+        "statements": 185
+      },
+      "src/surfacescope/adapters/dirsearch_adapter.py": {
+        "percent": 88.8,
+        "statements": 182
+      },
+      "src/surfacescope/adapters/finger_adapter.py": {
+        "percent": 75.41,
+        "statements": 125
+      },
+      "src/surfacescope/adapters/jsfinder_adapter.py": {
+        "percent": 85.51,
+        "statements": 51
+      },
+      "src/surfacescope/adapters/packer_adapter.py": {
+        "percent": 61.17,
+        "statements": 290
+      },
+      "src/surfacescope/adapters/swagger_adapter.py": {
+        "percent": 75.82,
+        "statements": 119
+      },
+      "src/surfacescope/artifacts.py": {
+        "percent": 57.78,
+        "statements": 41
+      },
+      "src/surfacescope/assets.py": {
+        "percent": 69.98,
+        "statements": 273
+      },
+      "src/surfacescope/cli.py": {
+        "percent": 80.74,
+        "statements": 358
+      },
+      "src/surfacescope/components/bypass403/catalog.py": {
+        "percent": 95.78,
+        "statements": 257
+      },
+      "src/surfacescope/components/dirsearch/words.py": {
+        "percent": 95.19,
+        "statements": 68
+      },
+      "src/surfacescope/components/finger/matcher.py": {
+        "percent": 87.53,
+        "statements": 301
+      },
+      "src/surfacescope/components/jsfinder/extract.py": {
+        "percent": 82.05,
+        "statements": 54
+      },
+      "src/surfacescope/components/packer/active.py": {
+        "percent": 94.12,
+        "statements": 52
+      },
+      "src/surfacescope/components/packer/analyzer.py": {
+        "percent": 82.1,
+        "statements": 118
+      },
+      "src/surfacescope/components/packer/secrets.py": {
+        "percent": 94.83,
+        "statements": 42
+      },
+      "src/surfacescope/components/swagger/parser.py": {
+        "percent": 75.35,
+        "statements": 239
+      },
+      "src/surfacescope/config.py": {
+        "percent": 71.96,
+        "statements": 129
+      },
+      "src/surfacescope/console.py": {
+        "percent": 59.82,
+        "statements": 315
+      },
+      "src/surfacescope/models.py": {
+        "percent": 86.89,
+        "statements": 180
+      },
+      "src/surfacescope/pipeline.py": {
+        "percent": 69.47,
+        "statements": 206
+      },
+      "src/surfacescope/quality/qc.py": {
+        "percent": 90.1,
+        "statements": 67
+      },
+      "src/surfacescope/reporting/schema.py": {
+        "percent": 93.65,
+        "statements": 53
+      },
+      "src/surfacescope/reporting/writer.py": {
+        "percent": 96.73,
+        "statements": 117
+      },
+      "src/surfacescope/result_store.py": {
+        "percent": 90.48,
+        "statements": 51
+      },
+      "src/surfacescope/tempdirs.py": {
+        "percent": 86.08,
+        "statements": 59
+      },
+      "src/surfacescope/traffic/cache.py": {
+        "percent": 81.63,
+        "statements": 41
+      },
+      "src/surfacescope/traffic/executor.py": {
+        "percent": 81.74,
+        "statements": 483
+      },
+      "src/surfacescope/traffic/profiles.py": {
+        "percent": 90.75,
+        "statements": 123
+      }
+    }
+  },
+  "request_budget": {
+    "uniform_403": 29,
+    "trailing_slash": 4,
+    "xff": 3
+  },
+  "latency_seconds": {
+    "uniform_403": 0.1073,
+    "trailing_slash": 0.0426,
+    "xff": 0.0494
+  },
+  "probe_runs": 5,
+  "tolerances": {
+    "coverage_points": 0.5,
+    "latency_factor": 2.5
+  }
+}

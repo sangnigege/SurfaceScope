@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "groups": {
+    "400": [
+      "%2e%2e//google.com",
+      "%2e%2e;/test",
+      "%3f/",
+      "%C0%AE%C0%AE%C0%AF",
+      "%ff",
+      ".%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd",
+      "..;/",
+      "cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd"
+    ],
+    "403": [
+      ".hta",
+      ".htaccess",
+      ".htaccess-dev",
+      ".htaccess-local",
+      ".htaccess-marco",
+      ".htaccess.BAK",
+      ".htaccess.bak",
+      ".htaccess.inc",
+      ".htaccess.old",
+      ".htaccess.txt",
+      ".htaccess/",
+      ".htaccess~",
+      ".htgroup",
+      ".htpa55wd",
+      ".htpasswd",
+      ".htpasswd-old",
+      ".htpasswd.bak",
+      ".htpasswd.inc",
+      ".htpasswd/",
+      ".htpasswrd",
+      ".htusers"
+    ],
+    "500": [
+      "%2e%2e;/test",
+      "%3f/",
+      "%C0%AE%C0%AE%C0%AF",
+      "%ff",
+      "..;/"
+    ]
+  }
+}

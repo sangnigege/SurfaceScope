@@ -1,0 +1,355 @@
+{
+  "schema_version": 3,
+  "assets": [
+    {
+      "id": "config.defaults",
+      "kind": "config.defaults",
+      "path": "assets/config/defaults.toml",
+      "version": "2026.11",
+      "source": "project-maintained",
+      "source_sha256": "7d3a11d720ffe8bae0b90c917cb868e688e9e7baf1412f48b29f8344c3530b13",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "b8b8c69914dc34c7f0180baeced86fa467b985e5c3358ffb1803d8b46b0e0844",
+      "size_bytes": 1245,
+      "encoding": "utf-8",
+      "raw_line_count": 67,
+      "item_count": 54,
+      "normalization": "normalize-eol,toml",
+      "normalization_version": 1,
+      "canonical_id": "config.defaults",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.config"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [],
+      "merge_policy": "project-maintained"
+    },
+    {
+      "id": "config.schema",
+      "kind": "config.schema",
+      "path": "assets/config/schema.json",
+      "version": "2026.11",
+      "source": "project-maintained",
+      "source_sha256": "2080a26b165660a13cc84aafff1d487fd9b380b3d923176985053774674e187a",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "e12a23fb0bcac5bbafdc3b03aea4b44015ec89a30fe3fd297210973938ab8c53",
+      "size_bytes": 3764,
+      "encoding": "utf-8",
+      "raw_line_count": 102,
+      "item_count": 62,
+      "normalization": "normalize-eol,json",
+      "normalization_version": 1,
+      "canonical_id": "config.schema",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.config"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [],
+      "merge_policy": "project-maintained"
+    },
+    {
+      "id": "profile.request.chromium_desktop",
+      "kind": "profile.request",
+      "path": "assets/profiles/request_profiles.json",
+      "version": "2026.11",
+      "source": "Chrome for Testing stable 157.0.8103.78 (official last-known-good, fetched 2026-11-17)",
+      "source_sha256": "fa48208b1f80acafdde6881441684677dae96dff4e55ca5c6d79541a97b9c501",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "12ebeba162cdf01ae7dbcd284020a0528a1697d34809a3c667964cbdbe1f19f7",
+      "size_bytes": 2177,
+      "encoding": "utf-8",
+      "raw_line_count": 66,
+      "item_count": 1,
+      "normalization": "normalize-eol,json",
+      "normalization_version": 1,
+      "canonical_id": "profile.request.chromium_desktop",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.traffic.profiles"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "chrome-for-testing:last-known-good-versions-with-downloads.json@2026-11-17",
+          "sha256": "fa48208b1f80acafdde6881441684677dae96dff4e55ca5c6d79541a97b9c501"
+        }
+      ],
+      "merge_policy": "single-source"
+    },
+    {
+      "id": "wordlist.paths.dicc",
+      "kind": "wordlist.paths",
+      "path": "assets/wordlists/paths/dicc.txt",
+      "version": "2026.11",
+      "source": "dirsearch@0.4.3 + v0.5.0 db/dicc.txt + SurfaceScope curated path profile",
+      "source_sha256": "2b5424a25adfecf49f65a142f61c0715b28923745e92eca63902ec4de01e0726",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "a3faa579ff1e8c9cf86c78f461711ff19d4b7d0d3863a2c6d7444ebfafdb002f",
+      "size_bytes": 142230,
+      "encoding": "utf-8",
+      "raw_line_count": 9522,
+      "item_count": 9522,
+      "normalization": "normalize-eol,strip-empty,dedupe-preserve-case",
+      "normalization_version": 1,
+      "canonical_id": "wordlist.paths.dicc",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.adapters.dirsearch_adapter"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "dirsearch@0.4.3:db/dicc.txt",
+          "sha256": "24f09c18ea2075af8e5cc24c25cf828bc8adc0da016f72f5f9096235a3c1517f"
+        },
+        {
+          "path": "dirsearch@v0.5.0:db/dicc.txt",
+          "sha256": "2b5424a25adfecf49f65a142f61c0715b28923745e92eca63902ec4de01e0726"
+        }
+      ],
+      "merge_policy": "curated-union"
+    },
+    {
+      "id": "wordlist.credentials.username",
+      "kind": "wordlist.credentials",
+      "path": "assets/wordlists/credentials/username.dic",
+      "version": "2026.11",
+      "source": "Packer-Fuzzer snapshot",
+      "source_sha256": "a8e888b29eb77970924b2748b817a3e0b215f4358b3fc7ace6434e499710c0b6",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "0dd2e16ff450b0bec4d747e4170811d601ebfa5bbc9fbcf0db79a0bf961c851c",
+      "size_bytes": 16,
+      "encoding": "utf-8",
+      "raw_line_count": 3,
+      "item_count": 3,
+      "normalization": "normalize-eol,strip-empty,dedupe-preserve-case",
+      "normalization_version": 1,
+      "canonical_id": "wordlist.credentials.username",
+      "copy_of": null,
+      "consumers": [],
+      "package": "legacy",
+      "status": "legacy",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "Packer-Fuzzer/doc/dict/username.dic",
+          "sha256": "a8e888b29eb77970924b2748b817a3e0b215f4358b3fc7ace6434e499710c0b6"
+        }
+      ],
+      "merge_policy": "single-source"
+    },
+    {
+      "id": "wordlist.credentials.password",
+      "kind": "wordlist.credentials",
+      "path": "assets/wordlists/credentials/password.dic",
+      "version": "2026.11",
+      "source": "Packer-Fuzzer snapshot",
+      "source_sha256": "29b55ee8973c769e4a5e3f9960c16e6a7c77901504056935d45b70ebd2834667",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "e136d39fcc3760d1e3b654bafe66a673118f5003ee325df5131adf8322cb23fa",
+      "size_bytes": 35,
+      "encoding": "utf-8",
+      "raw_line_count": 5,
+      "item_count": 5,
+      "normalization": "normalize-eol,strip-empty,dedupe-preserve-case",
+      "normalization_version": 1,
+      "canonical_id": "wordlist.credentials.password",
+      "copy_of": null,
+      "consumers": [],
+      "package": "legacy",
+      "status": "legacy",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "Packer-Fuzzer/doc/dict/password.dic",
+          "sha256": "29b55ee8973c769e4a5e3f9960c16e6a7c77901504056935d45b70ebd2834667"
+        }
+      ],
+      "merge_policy": "single-source"
+    },
+    {
+      "id": "blacklist.status.codes",
+      "kind": "filter.status_suffix",
+      "path": "assets/blacklists/status/codes.json",
+      "version": "2026.11",
+      "source": "db/400_blacklist.txt, db/403_blacklist.txt, db/500_blacklist.txt",
+      "source_sha256": "879529b14adb39d8b565c441e3751ee847f389aded95b798752a2a4c4b3313ed",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "879529b14adb39d8b565c441e3751ee847f389aded95b798752a2a4c4b3313ed",
+      "size_bytes": 855,
+      "encoding": "utf-8",
+      "raw_line_count": 45,
+      "item_count": 34,
+      "normalization": "normalize-eol,json,dedupe-sorted-values",
+      "normalization_version": 1,
+      "canonical_id": "blacklist.status.codes",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.adapters.dirsearch_adapter"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "db/400_blacklist.txt",
+          "sha256": "05d2552a1bf3c513b00c492b2e707ac512526ea654feedcdb9d06d23f7d1c02c"
+        },
+        {
+          "path": "db/403_blacklist.txt",
+          "sha256": "e3d43c9ba6dba0e1f6fed716aed98f00bc44ba2b34279708445e6dd2ad1d8be3"
+        },
+        {
+          "path": "db/500_blacklist.txt",
+          "sha256": "205b19fd0c64b18883319767cd8932c8424a7a5a311a09a159d0fd65906f8d16"
+        }
+      ],
+      "merge_policy": "merged-status-lists"
+    },
+    {
+      "id": "fingerprint.finger.rules",
+      "kind": "fingerprint.rules",
+      "path": "assets/fingerprints/finger.json",
+      "version": "0b8ec882",
+      "source": "https://github.com/sangnigege/Finger@0b8ec882 library/finger.json",
+      "source_sha256": "9f14c14357b2ef02b617e6c9706eaa4fb8c3b624832b40ca29677fa312fd9f8c",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "d925e2fb7cccf70e9b7d4a3237cf262a474f8b5ea05d3fd5d19abe2cdfacae4a",
+      "size_bytes": 2849364,
+      "encoding": "utf-8",
+      "raw_line_count": 148603,
+      "item_count": 16918,
+      "normalization": "normalize-eol,json",
+      "normalization_version": 1,
+      "canonical_id": "fingerprint.finger.rules",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.adapters.finger_adapter"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "https://github.com/sangnigege/Finger@0b8ec882/library/finger.json",
+          "sha256": "9f14c14357b2ef02b617e6c9706eaa4fb8c3b624832b40ca29677fa312fd9f8c"
+        }
+      ],
+      "merge_policy": "single-source"
+    },
+    {
+      "id": "wordlist.targets.grafana",
+      "kind": "wordlist.targets",
+      "path": "assets/wordlists/targets/grafana.txt",
+      "version": "2026.11",
+      "source": "db/grafana.txt",
+      "source_sha256": "5ff7016dbe78bde22ab0dffa8b5d288dabfabb7b956a8d54c70b37e9503fa6fd",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "11b3396b756071fc988c290ac3c9e3e61c4cd3777d0da048ac57dcbff96d13e5",
+      "size_bytes": 2776,
+      "encoding": "utf-8",
+      "raw_line_count": 40,
+      "item_count": 40,
+      "normalization": "normalize-eol,strip-empty,dedupe-preserve-case",
+      "normalization_version": 1,
+      "canonical_id": "wordlist.targets.grafana",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.adapters.dirsearch_adapter"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "db/grafana.txt",
+          "sha256": "5ff7016dbe78bde22ab0dffa8b5d288dabfabb7b956a8d54c70b37e9503fa6fd"
+        }
+      ],
+      "merge_policy": "single-source"
+    },
+    {
+      "id": "wordlist.targets.spring_boot_actuator",
+      "kind": "wordlist.targets",
+      "path": "assets/wordlists/targets/spring_boot_actuator.txt",
+      "version": "2026.11",
+      "source": "db/spring_Boot_Actuator.txt",
+      "source_sha256": "42825002209873a64e097d2de98b930c2ad899f8d0dee9692f25d6dcdbb6c422",
+      "license": "see NOTICE.md",
+      "license_file": "NOTICE.md",
+      "sha256": "762e2b86d5a9928ade2ba7124a48235d248f8010dfb6eef83c0ad454e016a158",
+      "size_bytes": 929,
+      "encoding": "utf-8",
+      "raw_line_count": 59,
+      "item_count": 57,
+      "normalization": "normalize-eol,strip-empty,dedupe-preserve-case",
+      "normalization_version": 1,
+      "canonical_id": "wordlist.targets.spring_boot_actuator",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.adapters.dirsearch_adapter"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "db/spring_Boot_Actuator.txt",
+          "sha256": "42825002209873a64e097d2de98b930c2ad899f8d0dee9692f25d6dcdbb6c422"
+        }
+      ],
+      "merge_policy": "single-source"
+    },
+    {
+      "id": "bypass.payloads.upstream",
+      "kind": "bypass.payloads",
+      "path": "assets/bypass403/payloads.json",
+      "version": "d465f2d3",
+      "source": "sangnigege/bypass403",
+      "source_sha256": "9567f8c5f95bea7e51308d9705a882ce3c2c3493e8da38b08682be168b155dd6",
+      "license": "MIT",
+      "license_file": "NOTICE.md",
+      "sha256": "ebe6db853f0a73cb42271d962a606a002805931a8b74c16f640dad6b57c07e1d",
+      "size_bytes": 17568,
+      "encoding": "utf-8",
+      "raw_line_count": 1017,
+      "item_count": 792,
+      "normalization": "normalize-eol,json",
+      "normalization_version": 1,
+      "canonical_id": "bypass.payloads.upstream",
+      "copy_of": null,
+      "consumers": [
+        "surfacescope.components.bypass403.catalog"
+      ],
+      "package": "core",
+      "status": "active",
+      "review_after": "2027-05-01",
+      "source_refs": [
+        {
+          "path": "sangnigege/bypass403@d465f2d3:bypass403/payloads",
+          "sha256": "9567f8c5f95bea7e51308d9705a882ce3c2c3493e8da38b08682be168b155dd6"
+        }
+      ],
+      "merge_policy": "single-source"
+    }
+  ]
+}

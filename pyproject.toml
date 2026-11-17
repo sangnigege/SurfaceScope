@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "surfacescope"
+version = "0.2.0"
+description = "SurfaceScope: unified web attack surface assessment pipeline for discovery, fingerprints, JS, 403 review, Swagger and Packer analysis"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "LicenseRef-Proprietary"
+license-files = ["NOTICE.md", "THIRD_PARTY_LICENSES.txt"]
+authors = [{name = "SurfaceScope maintainers"}]
+keywords = ["security", "pentest", "attack-surface", "dirsearch", "fingerprint", "swagger", "webpack"]
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Information Technology",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Security",
+]
+dependencies = [
+  "requests>=2.31",
+  "beautifulsoup4>=4.12",
+  "PyYAML>=6.0",
+  "tomli>=2.0; python_version < '3.11'",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+  "ruff>=0.6",
+  "build>=1.2",
+  "twine>=5",
+  "coverage[toml]>=7.6",
+]
+
+[project.scripts]
+surfacescope = "surfacescope.cli:main"
+sscope = "surfacescope.cli:main"
+dsbp = "surfacescope.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["surfacescope*"]
+
+[tool.setuptools.package-data]
+surfacescope = [
+  "assets/manifest.json",
+  "assets/config/*",
+  "assets/profiles/*",
+  "assets/wordlists/*/*",
+  "assets/blacklists/*/*",
+  "assets/fingerprints/*",
+  "assets/bypass403/*",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra --import-mode=importlib"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.coverage.run]
+branch = true
+source = ["surfacescope"]
+relative_files = true
+
+[tool.coverage.json]
+pretty_print = true
+

@@ -1,0 +1,67 @@
+[run]
+threads = 25
+timeout = 10.0
+max_response_bytes = 8388608
+profile = "chromium-desktop-stable"
+
+[traffic]
+verify_tls = true
+follow_redirects = false
+max_redirects = 10
+cache_ttl = 300.0
+cache_max_entries = 2048
+max_total_requests = 0
+max_requests_per_host = 0
+rate_limit_per_second = 0.0
+
+[dirsearch]
+wordlist = "wordlist.paths.dicc"
+target_profiles = []
+extensions = []
+force_extensions = []
+exclude_extensions = []
+exclude_redirects = []
+exclude_statuses = [400]
+min_response_size = 0
+max_response_size = 0
+max_candidates = 0
+max_jobs = 200000
+max_time = 0
+recursive = false
+max_depth = 1
+max_recursive_dirs = 100
+include_statuses = [200, 204, 301, 302, 307, 308, 401, 403]
+
+[bypass]
+mode = "fast"
+initial_variants_per_url = 0
+max_variants_per_url = 0
+max_targets = 400
+max_requests_per_host = 0
+max_total_requests = 0
+
+[swagger]
+active = false
+allow_external = false
+max_documents = 12
+max_requests = 200
+include_unsafe = false
+
+[packer]
+active = false
+active_sqli = false
+max_assets = 120
+max_endpoints = 2000
+max_active_checks = 60
+max_secrets = 50
+probe_endpoints = false
+probe_context_methods = false
+fetch_sourcemaps = false
+
+[finger]
+max_endpoints = 100
+scan_discovered = true
+
+[reports]
+format = "json"
+title = "SurfaceScope scan"

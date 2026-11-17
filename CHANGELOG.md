@@ -1,0 +1,45 @@
+# Changelog
+
+All notable user-facing changes to SurfaceScope are recorded here. The format follows
+the spirit of Keep a Changelog, and versions use PEP 440.
+
+## 0.2.0 - 2026-11-16
+
+### Added
+
+- Unified `surfacescope`, `sscope` and transitional `dsbp` command entry points.
+- Single `RequestExecutor` with shared request budgets, caching, authentication scope,
+  redirect handling and a browser-like request profile.
+- Unified `Finding` model and JSON, Markdown, HTML and CSV report writers.
+- 403/401 review modes: `quick`, `fast`, `balanced` and `full`.
+- Pure-Python Swagger/OpenAPI discovery and safe request generation.
+- Passive-first Packer/webpack surface, secret and CORS analysis.
+- `--all` for enabling every stage with safe defaults.
+- Package-owned asset manifest for wordlists, fingerprints, profiles and configuration.
+
+### Changed
+
+- Renamed the project from `dirsearch_bypass403` to **SurfaceScope**.
+- Replaced component-specific environments and runtime directories with one Python
+  package and one project environment.
+- Moved reports to `~/.surfacescope/reports` unless `--output` is supplied.
+- Default 403 review uses `fast` and only expands after a meaningful response difference.
+- Default request identity is a fixed Chrome-for-Testing application-layer profile rather
+  than per-component random or tool-specific headers.
+
+### Fixed
+
+- Removed runtime dependencies on ChromeDriver, EHole, Selenium, `docx2pdf`, Deno/Node
+  and component-local virtual environments.
+- Removed fixed working-directory queues, SQLite stage files and generated report files.
+- Added explicit soft-404, authentication-scope, redirect, budget and cross-origin controls.
+
+## 0.1.0 - 2026-11-16
+
+### Added
+
+- Initial Python package layout under `src/surfacescope`.
+- Directory discovery, JS extraction and fingerprint matching.
+- Compatibility shims for the old `dirsearch.py`, `single_403pass.py` and `swagger.py`
+  entry points.
+- Windows/Linux packaging and test foundation.

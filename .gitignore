@@ -1,0 +1,92 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+.venv-*/
+venv/
+env/
+.wheel-smoke/
+.pytest_cache/
+pytest-of-*/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+junit*.xml
+/coverage.json
+/quality-report.json
+/worktree.json
+
+# Build and local packaging
+build/
+dist/
+sdist/
+*.whl
+.eggs/
+.tox/
+.nox/
+/pip-*
+
+# Runtime artifacts and reports
+/artifacts/
+/reports/
+tmp/
+downloads/
+*.log
+*.tmp
+*.sqlite
+*.sqlite3
+*.db
+main.db
+
+# Legacy implicit pipes / generated files
+/403list.txt
+/bypass403_url.txt
+/jsfind403list.txt
+/dir_file_path.txt
+/output.txt
+/dada.sql
+
+# External binaries are not project source
+/chromedriver
+/chromedriver.exe
+/ehole/ehole
+/ehole/ehole.exe
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Generated documents and archives are not project source
+*.docx
+*.xlsx
+*.pdf
+*.zip
+
+# OS / editor / agent scratch
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+.agent/
+.agent_tmp/
+.codex/
+.worktrees/
+docs/plans/scratch/
+
+# Private maintenance material; public documentation stays under docs/
+/docs/internal/
+/AGENTS.md
+
+# Node / JS runtime caches used by optional analysis
+node_modules/
+.deno/
+

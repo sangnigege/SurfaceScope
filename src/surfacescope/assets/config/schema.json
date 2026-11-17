@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SurfaceScope configuration",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "run": {
+      "type": "object",
+      "properties": {
+        "threads": {"type": "integer", "minimum": 1, "maximum": 512},
+        "timeout": {"type": "number", "minimum": 0.1},
+        "max_response_bytes": {"type": "integer", "minimum": 1024},
+        "profile": {"type": "string"}
+      }
+    },
+    "traffic": {
+      "type": "object",
+      "properties": {
+        "verify_tls": {"type": "boolean"},
+        "follow_redirects": {"type": "boolean"},
+        "max_redirects": {"type": "integer", "minimum": 0, "maximum": 30},
+        "cache_ttl": {"type": "number", "minimum": 0},
+        "cache_max_entries": {"type": "integer", "minimum": 1},
+        "max_total_requests": {"type": "integer", "minimum": 0},
+        "max_requests_per_host": {"type": "integer", "minimum": 0},
+        "rate_limit_per_second": {"type": "number", "minimum": 0}
+      }
+    },
+    "dirsearch": {
+      "type": "object",
+      "properties": {
+        "wordlist": {"type": "string"},
+        "target_profiles": {"type": "array"},
+        "extensions": {"type": "array"},
+        "force_extensions": {"type": "array"},
+        "exclude_extensions": {"type": "array"},
+        "exclude_redirects": {"type": "array"},
+        "prefixes": {"type": "array"},
+        "suffixes": {"type": "array"},
+        "include_statuses": {"type": "array"},
+        "exclude_statuses": {"type": "array"},
+        "min_response_size": {"type": "integer", "minimum": 0},
+        "max_response_size": {"type": "integer", "minimum": 0},
+        "max_candidates": {"type": "integer", "minimum": 0},
+        "max_jobs": {"type": "integer", "minimum": 1},
+        "max_time": {"type": "number", "minimum": 0},
+        "recursive": {"type": "boolean"},
+        "max_recursive_dirs": {"type": "integer", "minimum": 0},
+        "max_depth": {"type": "integer", "minimum": 1}
+      }
+    },
+    "bypass": {
+      "type": "object",
+      "properties": {
+        "mode": {"enum": ["quick", "fast", "balanced", "full"]},
+        "initial_variants_per_url": {"type": "integer", "minimum": 0},
+        "max_variants_per_url": {"type": "integer", "minimum": 0},
+        "max_targets": {"type": "integer", "minimum": 1},
+        "max_requests_per_host": {"type": "integer", "minimum": 0},
+        "max_total_requests": {"type": "integer", "minimum": 0}
+      }
+    },
+    "swagger": {
+      "type": "object",
+      "properties": {
+        "active": {"type": "boolean"},
+        "max_documents": {"type": "integer", "minimum": 1, "maximum": 100},
+        "max_requests": {"type": "integer", "minimum": 1},
+        "include_unsafe": {"type": "boolean"},
+        "allow_external": {"type": "boolean"}
+      }
+    },
+    "packer": {
+      "type": "object",
+      "properties": {
+        "max_assets": {"type": "integer", "minimum": 1, "maximum": 1000},
+        "max_endpoints": {"type": "integer", "minimum": 1},
+        "max_active_checks": {"type": "integer", "minimum": 1},
+        "max_secrets": {"type": "integer", "minimum": 1},
+        "active": {"type": "boolean"},
+        "active_sqli": {"type": "boolean"},
+        "probe_endpoints": {"type": "boolean"},
+        "probe_context_methods": {"type": "boolean"},
+        "fetch_sourcemaps": {"type": "boolean"}
+      }
+    },
+    "finger": {
+      "type": "object",
+      "properties": {
+        "max_endpoints": {"type": "integer", "minimum": 1, "maximum": 1000},
+        "scan_discovered": {"type": "boolean"}
+      }
+    },
+    "reports": {
+      "type": "object",
+      "properties": {
+        "format": {"type": "string"},
+        "title": {"type": "string"}
+      }
+    }
+  }
+}

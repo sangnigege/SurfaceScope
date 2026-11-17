@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-17",
+  "profiles": [
+    {
+      "id": "chromium-desktop-stable",
+      "family": "chromium",
+      "major": 157,
+      "platform": "windows",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+      "accept_language": "zh-CN,zh;q=0.9,en;q=0.8",
+      "client_hints": {
+        "sec-ch-ua": "\"Chromium\";v=\"157\", \"Google Chrome\";v=\"157\", \"Not-A.Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\""
+      },
+      "header_order": [
+        "User-Agent",
+        "Accept",
+        "Accept-Language",
+        "Accept-Encoding",
+        "Sec-CH-UA",
+        "Sec-CH-UA-Mobile",
+        "Sec-CH-UA-Platform",
+        "Sec-Fetch-Site",
+        "Sec-Fetch-Mode",
+        "Sec-Fetch-Dest",
+        "Sec-Fetch-User",
+        "Upgrade-Insecure-Requests",
+        "Referer",
+        "Origin"
+      ],
+      "purposes": {
+        "navigation": {
+          "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+          "accept_encoding": "gzip, deflate, br, zstd",
+          "sec_fetch_mode": "navigate",
+          "sec_fetch_dest": "document",
+          "sec_fetch_user": "?1",
+          "upgrade_insecure_requests": "1"
+        },
+        "xhr": {
+          "accept": "*/*",
+          "accept_encoding": "gzip, deflate, br, zstd",
+          "sec_fetch_mode": "cors",
+          "sec_fetch_dest": "empty"
+        },
+        "asset": {
+          "accept": "*/*",
+          "accept_encoding": "gzip, deflate, br, zstd",
+          "sec_fetch_mode": "no-cors",
+          "sec_fetch_dest": "script"
+        },
+        "api": {
+          "accept": "application/json, text/plain, */*",
+          "accept_encoding": "gzip, deflate, br, zstd",
+          "sec_fetch_mode": "cors",
+          "sec_fetch_dest": "empty"
+        }
+      },
+      "updated_at": "2026-11-17",
+      "review_after": "2027-02-15",
+      "source": "Chrome for Testing Stable 157.0.8103.78 (official last-known-good, 2026-11-17); reduced UA plus consistent Client Hints"
+    }
+  ]
+}
