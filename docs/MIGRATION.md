@@ -49,6 +49,21 @@ SurfaceScope 作为全新公开发行版时，才考虑独立新仓库或 orphan
 | `python single_403pass.py -u URL -p /admin` | `surfacescope -u "URL/admin" --components bypass403 --bypass` |
 | `python swagger.py -u URL` | `surfacescope -u URL --components dirsearch,swagger --swagger` |
 
+## One-command recipes
+
+`--components` 是**替换** base 组件集；`--swagger` / `--bypass` / `--packer` 是**追加**到 base。
+两种写法都不会隐式开启 unsafe/active/SQLi，需要主动能力时继续加对应开关。
+
+| 想要什么 | 单条命令 |
+|---|---|
+| 旧 `dirsearch.py` 的等价流程 | `surfacescope -u URL`（默认 `dirsearch,jsfinder,finger`） |
+| 旧 `single_403pass.py` | `surfacescope -u URL/admin --components bypass403` |
+| 旧 `swagger.py` | `surfacescope -u URL --components dirsearch,swagger` |
+| 旧 Packer 流程（`-p yes`） | `surfacescope -u URL --components dirsearch,packer` |
+| 只要纯目录发现 | `surfacescope -u URL --components dirsearch` |
+| 只要 Swagger 解析 | `surfacescope -u URL --components swagger` |
+| 在默认三件套上追加阶段 | `surfacescope -u URL --swagger`（或 `--bypass`、`--packer`） |
+| 全阶段但保持安全默认 | `surfacescope -u URL --all` |
 ## Option mapping
 
 | Old family | New |

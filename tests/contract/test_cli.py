@@ -240,3 +240,11 @@ def test_all_respects_explicit_component_selection_and_negative_flags(capsys) ->
     ) == 0
     explicit = json.loads(capsys.readouterr().out)
     assert explicit["components"] == ["dirsearch"]
+
+def test_list_components_prints_canonical_components_only(capsys) -> None:
+    assert main(["--list-components"]) == 0
+
+    lines = capsys.readouterr().out.splitlines()
+
+    assert lines == ["dirsearch", "jsfinder", "packer", "swagger", "bypass403", "finger"]
+    assert "bypass" not in lines

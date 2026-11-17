@@ -21,7 +21,7 @@ from .components.bypass403.catalog import MODE_POLICIES
 from .console import write_scan_result
 from .errors import AssetError, ConfigurationError, RequestError
 from .models import Target, validate_request_headers
-from .pipeline import ADAPTERS, run_scan, validate_runtime
+from .pipeline import COMPONENT_ORDER, run_scan, validate_runtime
 from .traffic.profiles import RequestProfileRegistry
 
 DEFAULT_COMPONENTS = "dirsearch,jsfinder,finger"
@@ -62,7 +62,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help=(
             f"comma-separated components; default: {DEFAULT_COMPONENTS}; "
-            f"explicit value overrides --all"
+            f"explicit value overrides --all; old-script recipes are listed in docs/MIGRATION.md"
         ),
     )
     parser.add_argument(
@@ -174,7 +174,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
     if args.list_components:
-        print("\n".join(sorted(set(ADAPTERS))))
+        print("\n".join(COMPONENT_ORDER))
         return 0
     if args.list_profiles:
         try:
