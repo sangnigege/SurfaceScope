@@ -13,6 +13,8 @@ the spirit of Keep a Changelog, and versions use PEP 440.
 - Dropped the third-party license file in favour of the attribution table in `NOTICE.md`.
 - Removed the optional container build and the CodeQL workflow from the public delivery
   surface.
+- Rewrote the README with a capability map, scenario table, configuration summary and a
+  documentation index.
 
 ## 0.2.0 - 2026-11-16
 
