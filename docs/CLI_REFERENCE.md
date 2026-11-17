@@ -166,7 +166,7 @@ secret、upload marker、API surface 和 Finger 规则属于被动分析，不�
   多来源 finding 在 `SOURCES` 列显示 `sources=N`；
 - `dirsearch` 的路径 finding 只显示相对路径（如 `/admin/`），不重复打印整条 URL；
 - 实时进度行写到 **stderr**，因此 `surfacescope ... > report.txt` 的重定向输出仍然干净；
-  非 TTY（管道、CI）自动不输出进度。
+  非 TTY（管道、CI）自动不输出进度；目前 `dirsearch`、`bypass403`、`packer` 三个阶段会上报进度。
 
 终端渲染器是只读展示层，不解析目标、不发包、不改变 `PipelineResult`。
 
