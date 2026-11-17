@@ -1,20 +1,21 @@
 # SurfaceScope
 
 > 一个工具完成 Web 攻击面评估
+>
 > 目录发现 → JS/API 提取 → 指纹识别 → 403/401 复核 → Swagger 分析 → Packer 分析 → 统一报告
 
 [![ci](https://github.com/sangnigege/SurfaceScope/actions/workflows/ci.yml/badge.svg)](https://github.com/sangnigege/SurfaceScope/actions/workflows/ci.yml)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
 
-> ⚠️ 仅用于你拥有或已取得明确书面授权的目标。默认只做低风险发现，主动探测必须显式开启。
+> ⚠️ 仅用于你拥有或已取得明确书面授权的目标。默认只做低风险发现。
 
 
 ## 快速开始
 
 ### 安装
 
-需要 Python 3.10 或更高版本。两种方式按用途选一个。
+需要 Python 3.10 或更高版本。两种安装方式按用途选择。
 
 #### 方式一：uv / pipx（推荐，只运行不开发）
 
