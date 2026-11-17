@@ -8,7 +8,6 @@ no upstream source code is copied into this repository.
 |---|---|---|
 | Directory discovery | dirsearch 0.4.3 (`https://github.com/maurosoria/dirsearch`) | Pure-Python compatible core; no component-local venv or runtime clone |
 | Fingerprint rules | Finger (`https://github.com/sangnigege/Finger`) commit `0b8ec882` | `finger.json` converted to package data; EHole binary is not shipped |
-| 403 payload catalog | `sangnigege/bypass403` commit `d465f2d3` (`https://github.com/sangnigege/bypass403`) | Payload snapshot in `assets/bypass403/payloads.json`; no runtime import or clone; MIT per upstream README |
 | JS discovery | JSFinder-derived extraction ideas | Rewritten under the shared HTTP/result contracts |
 | Swagger/OpenAPI | `swagger-exp` and `swagger-hack` parsing and request-generation ideas | Parser/request generation only; no browser UI, ChromeDriver or Excel writer |
 | Packer analysis | Packer-Fuzzer (`https://github.com/rtcatc/Packer-Fuzzer`) | Core analysis is folded into the Python package; no SQLite/CWD stage bus, component venv, browser, or runtime clone |
