@@ -6,8 +6,6 @@
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
 
-当前公开版本：`0.2.0`　·　命令 `surfacescope` / `sscope`　·　包名 `surfacescope`
-
 > ⚠️ 仅用于你拥有或已取得明确书面授权的目标。默认只做低风险发现，主动探测必须显式开启。
 
 ## 目录

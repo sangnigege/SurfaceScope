@@ -137,3 +137,12 @@ def test_check_aggregates_public_document_failures(tmp_path: Path) -> None:
     assert any("missing public document" in error for error in errors)
     assert any("private marker 'candidate-'" in error for error in errors)
     assert any("missing pyproject.toml" in error for error in errors)
+
+def test_version_identity_allows_readme_without_marker(tmp_path: Path) -> None:
+    _write(
+        tmp_path / "pyproject.toml",
+        '[project]\nname = "surfacescope"\nversion = "1.2.3"\n',
+    )
+    _write(tmp_path / "README.md", "# SurfaceScope\n")
+
+    assert check_docs.check_version_identity(tmp_path) == []

@@ -14,7 +14,8 @@ the spirit of Keep a Changelog, and versions use PEP 440.
 - Removed the optional container build and the CodeQL workflow from the public delivery
   surface.
 - Rewrote the README with a capability map, scenario table, configuration summary and a
-  documentation index.
+  documentation index.- Dropped the README version marker; `pyproject.toml` is the single source of truth and
+  `check_docs` only cross-checks the marker when a README still declares one.
 - Made the `Path.cwd().parent` temporary fallback opt-in via `SURFACESCOPE_ALLOW_CWD_PARENT_TMP=1`,
   so restricted environments no longer scatter `surfacescope-*` directories beside the
   project by default.

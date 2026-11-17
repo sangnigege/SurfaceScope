@@ -186,8 +186,10 @@ def check_version_identity(root: Path) -> list[str]:
         return ["README.md: missing README.md"]
     readme = readme_path.read_text(encoding="utf-8")
     readme_match = README_VERSION_RE.search(readme)
-    if not readme_match:
-        return ["README.md: missing current public version marker"]
+    if readme_match is None:
+        # The README may omit the version marker on purpose; pyproject.toml stays the
+        # single source of truth. When the marker is present it must not drift.
+        return []
     if readme_match.group(1) != version:
         return [f"README.md version {readme_match.group(1)} != pyproject version {version}"]
     return []
