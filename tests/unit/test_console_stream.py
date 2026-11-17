@@ -55,7 +55,7 @@ def _result() -> PipelineResult:
 def test_banner_and_finger_table_are_rendered() -> None:
     output = render_scan_result(_result(), color=False)
 
-    assert "#####" in output
+    assert "/ ___|" in output
     assert "SurfaceScope" in output
     assert "STATUS" in output and "TECHNOLOGY" in output and "SOURCES" in output
     assert "[Demo]" in output

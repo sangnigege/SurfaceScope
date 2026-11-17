@@ -44,30 +44,19 @@ _LIMIT_FLAGS = (
     ("probe_limit_reached", "endpoint probe limit reached"),
 )
 
-# 3x5 block glyphs so the banner stays readable on legacy Windows consoles.
-_GLYPHS: dict[str, tuple[str, ...]] = {
-    "A": (" ### ", "#   #", "#####", "#   #", "#   #"),
-    "C": (" ####", "#    ", "#    ", "#    ", " ####"),
-    "E": ("#####", "#    ", "#### ", "#    ", "#####"),
-    "F": ("#####", "#    ", "#### ", "#    ", "#    "),
-    "O": (" ### ", "#   #", "#   #", "#   #", " ### "),
-    "P": ("#### ", "#   #", "#### ", "#    ", "#    "),
-    "R": ("#### ", "#   #", "#### ", "#  # ", "#   #"),
-    "S": ("#####", "#    ", "#### ", "    #", "#####"),
-    "U": ("#   #", "#   #", "#   #", "#   #", "#####"),
-    " ": ("     ", "     ", "     ", "     ", "     "),
-}
-_BANNER_WORD = "SURFACESCOPE"
+# figlet "standard" lettering, pure ASCII so every console renders it.
+_BANNER = r"""
+ ____              __                ____
+/ ___| _   _ _ __ / _| __ _  ___ ___/ ___|  ___ ___  _ __   ___
+\___ \| | | | '__| |_ / _` |/ __/ _ \___ \ / __/ _ \| '_ \ / _ \
+ ___) | |_| | |  |  _| (_| | (_|  __/___) | (_| (_) | |_) |  __/
+|____/ \__,_|_|  |_|  \__,_|\___\___|____/ \___\___/| .__/ \___|
+                                                    |_|
+""".strip("\n").splitlines()
 
 
 def _banner_art() -> list[str]:
-    rows = [""] * 5
-    for index, letter in enumerate(_BANNER_WORD):
-        glyph = _GLYPHS.get(letter, _GLYPHS[" "])
-        for row in range(5):
-            rows[row] += ("" if index == 0 else " ") + glyph[row]
-    return ["  " + row.rstrip() for row in rows]
-
+    return ["  " + line.rstrip() for line in _BANNER]
 
 class _Palette:
     def __init__(self, enabled: bool) -> None:
