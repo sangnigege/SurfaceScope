@@ -162,6 +162,9 @@ class DirsearchAdapter(ComponentAdapter):
             except Exception as exc:
                 return job, None, None, exc
 
+        progress = getattr(context, "progress", None)
+        total_jobs = len(jobs)
+
         pending = [] if budget_stopped else jobs
         while pending and not timed_out and not budget_stopped:
             next_pending: list[tuple[Target, str, str, int]] = []
@@ -182,6 +185,8 @@ class DirsearchAdapter(ComponentAdapter):
                     result.errors.append(f"{base}{path}: {exc}")
                     continue
                 tested += 1
+                if progress is not None:
+                    progress("dirsearch", tested, total_jobs)
                 if snapshot is not None:
                     context.results.add_snapshot(snapshot)
                 if finding is None:

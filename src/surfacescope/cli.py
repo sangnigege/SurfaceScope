@@ -12,13 +12,14 @@ import contextlib
 import json
 import os
 import sys
+import urllib.request
 from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
 
 from . import __version__
 from .assets import AssetManifest
 from .components.bypass403.catalog import MODE_POLICIES
-from .console import write_scan_result
+from .console import ConsoleStream
 from .errors import AssetError, ConfigurationError, RequestError
 from .models import Target, validate_request_headers
 from .pipeline import COMPONENT_ORDER, run_scan, validate_runtime
@@ -166,6 +167,18 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--list-profiles", action="store_true")
     parser.add_argument("--list-assets", action="store_true")
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
+    parser.add_argument(
+        "--check-update",
+        action="store_true",
+        help="check GitHub tags for a newer release and print the upgrade command (does not install)",
+    )
+    parser.add_argument("--no-progress", action="store_true", help="disable the live progress line on stderr")
+    parser.add_argument(
+        "--progress-interval",
+        type=int,
+        default=500,
+        help="emit a progress heartbeat every N requests (default: 500)",
+    )
     return parser
 
 
@@ -173,6 +186,8 @@ def main(argv: list[str] | None = None) -> int:
     _configure_redirected_output()
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.check_update:
+        return _check_update(verbose=args.verbose)
     if args.list_components:
         print("\n".join(COMPONENT_ORDER))
         return 0
@@ -225,6 +240,10 @@ def main(argv: list[str] | None = None) -> int:
             }
             print(json.dumps(payload, ensure_ascii=False, indent=2))
             return 0
+        printer = ConsoleStream(
+            color=False if args.no_color else None,
+            progress_interval=args.progress_interval,
+        )
         result = run_scan(
             targets,
             components=components,
@@ -237,6 +256,9 @@ def main(argv: list[str] | None = None) -> int:
             proxy=args.proxy,
             verbose=args.verbose,
             artifact_root=args.artifact_root,
+            on_header=printer.header,
+            on_component=printer.component,
+            progress=None if args.no_progress else printer.progress,
         )
     except KeyboardInterrupt:
         print("interrupted", file=sys.stderr)
@@ -248,7 +270,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
 
-    write_scan_result(result, color=None if not args.no_color else False)
+    printer.summary(result)
     return 0 if result.component_result.ok else 1
 
 
@@ -520,6 +542,87 @@ def _normalise_url(value: str) -> str:
     if parts.scheme not in ("http", "https") or not parts.netloc:
         raise ConfigurationError(f"unsupported target URL: {value}")
     return urlunsplit((parts.scheme, parts.netloc, parts.path or "/", parts.query, ""))
+
+
+_TAGS_URL = "https://api.github.com/repos/sangnigege/SurfaceScope/tags?per_page=30"
+_REPO_URL = "https://github.com/sangnigege/SurfaceScope"
+
+_UPGRADE_HINTS = {
+    "uv": 'uv tool install --force --reinstall "git+https://github.com/sangnigege/SurfaceScope.git@main"',
+    "pipx": "pipx reinstall surfacescope",
+    "git": 'pip install --upgrade "git+https://github.com/sangnigege/SurfaceScope.git@main"',
+    "editable": "git pull && pip install -e .",
+    "unknown": f"reinstall with your package manager, or see {_REPO_URL}",
+}
+
+
+def _version_key(text: str) -> tuple[int, ...]:
+    """Turn ``v0.2.0`` or ``0.2`` into a comparable tuple of integers."""
+
+    parts: list[int] = []
+    for piece in str(text).strip().lstrip("vV").split("."):
+        digits = "".join(character for character in piece if character.isdigit())
+        parts.append(int(digits) if digits else 0)
+    return tuple(parts)
+
+
+def _installed_via() -> str:
+    """Best-effort detection of how this copy was installed."""
+
+    try:
+        from importlib import metadata
+
+        raw = metadata.distribution("surfacescope").read_text("direct_url.json")
+    except Exception:  # pragma: no cover - metadata is absent in some layouts
+        raw = None
+    if raw:
+        try:
+            payload = json.loads(raw)
+        except json.JSONDecodeError:
+            payload = None
+        if isinstance(payload, dict):
+            if payload.get("dir_info"):
+                return "editable"
+            if payload.get("vcs_info"):
+                return "git"
+    prefix = str(getattr(sys, "prefix", "")).replace("\\", "/").lower()
+    if "/pipx/venvs/" in prefix:
+        return "pipx"
+    if "/uv/tools/" in prefix:
+        return "uv"
+    return "unknown"
+
+
+def _check_update(*, verbose: bool = False) -> int:
+    """Report the newest published tag and the matching upgrade command."""
+
+    origin = _installed_via()
+    print(f"SurfaceScope {__version__} (installed via {origin})")
+    request = urllib.request.Request(
+        _TAGS_URL,
+        headers={"User-Agent": f"surfacescope/{__version__}", "Accept": "application/vnd.github+json"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=8) as response:  # noqa: S310 - fixed https URL
+            payload = json.loads(response.read().decode("utf-8"))
+    except Exception as exc:
+        print(f"update check unavailable: {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 0
+    tags = [str(item.get("name", "")) for item in payload if isinstance(item, dict)] if isinstance(payload, list) else []
+    candidates = [tag for tag in tags if _version_key(tag) > (0,)]
+    if not candidates:
+        print("no published release tags found")
+        return 0
+    latest = max(candidates, key=_version_key)
+    if _version_key(latest) <= _version_key(__version__):
+        print(f"latest tag: {latest}  -> already up to date")
+        return 0
+    if verbose:
+        print(f"local version: {__version__}")
+    print(f"latest tag: {latest}  -> newer than {__version__}")
+    print("upgrade with:")
+    print("  " + _UPGRADE_HINTS.get(origin, _UPGRADE_HINTS["unknown"]))
+    return 0
 
 
 if __name__ == "__main__":

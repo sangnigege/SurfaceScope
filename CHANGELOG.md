@@ -5,6 +5,16 @@ the spirit of Keep a Changelog, and versions use PEP 440.
 
 ## Unreleased
 
+### Added
+
+- Streaming terminal output: the banner and each stage's results are printed as soon as the
+  stage finishes instead of appearing all at once at the end.
+- `finger` findings render as an aligned table (`STATUS / CONF / TECHNOLOGY / SOURCES /
+  EVIDENCE / TARGET`); `dirsearch` findings print paths relative to their target.
+- Live progress heartbeat on stderr, enabled by default on a TTY (`--no-progress`,
+  `--progress-interval`).
+- `--check-update` reports the newest published tag and the upgrade command for the detected
+  install method; it never installs anything.
 ### Changed
 
 - Consolidated `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md` and the security policy under
@@ -30,6 +40,8 @@ the spirit of Keep a Changelog, and versions use PEP 440.
 - `--components` help points at the one-command recipes in `docs/MIGRATION.md`, which now
   maps each removed root script to a single invocation.
 
+- README upgrade instructions now separate `git+https://` installs (need
+  `--force --reinstall` / `pipx reinstall`) from index-based installs.
 ### Removed
 
 - Removed the root compatibility shims `dirsearch.py`, `single_403pass.py` and

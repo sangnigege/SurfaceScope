@@ -8,6 +8,7 @@ write user-facing reports.
 from __future__ import annotations
 
 import secrets
+from collections.abc import Callable
 from dataclasses import dataclass, field, replace
 from datetime import datetime, timezone
 from pathlib import Path
@@ -73,6 +74,7 @@ def create_context(
     proxy: str | None = None,
     verbose: bool = False,
     artifact_root: str | Path | None = None,
+    progress: Callable[[str, int, int], None] | None = None,
 ) -> tuple[ScanContext, RequestExecutor, ArtifactStore, RequestAudit]:
     config, manifest, profile = validate_runtime(
         user_config=user_config,
@@ -120,6 +122,7 @@ def create_context(
         wordlists=WordlistRegistry(manifest),
         output_dir=Path.home() / ".surfacescope" / "reports",
         options={},
+        progress=progress,
     )
     # The executor owns one profile registry and one budget for the whole run.
     # Component-scoped policies prevent a 403 stage from silently consuming an
@@ -179,6 +182,10 @@ def run_scan(
     proxy: str | None = None,
     verbose: bool = False,
     artifact_root: str | Path | None = None,
+    run_id: str | None = None,
+    on_header: Callable[[dict[str, Any]], None] | None = None,
+    on_component: Callable[[int, str, ComponentResult], None] | None = None,
+    progress: Callable[[str, int, int], None] | None = None,
 ) -> PipelineResult:
     if not targets:
         raise ConfigurationError("at least one target URL is required")
@@ -194,18 +201,28 @@ def run_scan(
         proxy=proxy,
         verbose=verbose,
         artifact_root=artifact_root,
+        progress=progress,
     )
     for target in targets:
         executor.register_target(target.identity, url=target.url, proxy=target.proxy)
     context.output_dir = Path(output_dir).expanduser() if output_dir else Path.home() / ".surfacescope" / "reports"
     if report_format is None:
         report_format = str(context.config.section("reports").get("format", "json"))
-    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + secrets.token_hex(3)
+    run_id = run_id or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ") + "-" + secrets.token_hex(3)
     aggregate = ComponentResult()
     options = dict(adapter_options or {})
     ordered_components = _ordered_components(components)
     context.options["components"] = list(ordered_components)
     component_results: dict[str, ComponentResult] = {}
+    if on_header is not None:
+        on_header(
+            {
+                "run_id": run_id,
+                "targets": [target.url for target in targets],
+                "profile": getattr(context.profile, "id", "-"),
+                "components": list(ordered_components),
+            }
+        )
     try:
         for name in ordered_components:
             adapter = ADAPTERS[name]()
@@ -221,6 +238,8 @@ def run_scan(
             aggregate.errors.extend(result.errors)
             aggregate.artifacts.extend(result.artifacts)
             context.results.add_findings(result.findings)
+            if on_component is not None:
+                on_component(len(component_results), name, result)
         aggregate.stats["components"] = ordered_components
         aggregate.stats["component_stats"] = {name: result.stats for name, result in component_results.items()}
         aggregate.stats["audit"] = audit.summary()

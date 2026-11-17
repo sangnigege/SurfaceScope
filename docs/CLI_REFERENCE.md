@@ -149,12 +149,26 @@ secret、upload marker、API surface 和 Finger 规则属于被动分析，不�
 | `--verbose` | 详细日志 |
 | `--no-color` | 禁用 ANSI 颜色；TTY 默认自动检测，也支持 `NO_COLOR`/`FORCE_COLOR` |
 | `--dry-run` | 只解析并打印计划，不发起扫描 |
+| `--check-update` | 查询 GitHub 最新 tag 并打印对应的升级命令；只读，不安装 |
+| `--no-progress` | 关闭 stderr 上的实时进度行 |
+| `--progress-interval N` | 每 N 个请求刷新一次进度行（默认 500） |
 | `--version` | 版本 |
 
-扫描结束后的终端输出由 `surfacescope.console` 统一渲染：每个已启用阶段都有标题、
+终端输出由 `surfacescope.console` 统一渲染，并且是**边跑边出**：先打印 banner 与本次
+运行信息（目标、run id、profile、组件），每个阶段一结束就立刻输出该阶段的标题、
 `OK/ERRORS` 状态、统计、finding、限制标记和错误；空结果输出 `(no findings)`。
-`SUMMARY` 汇总 finding、错误、网络请求、缓存、403 预算和报告路径。终端渲染器是只读
-展示层，不解析目标、不发包、不改变 `PipelineResult`。
+最后的 `SUMMARY` 汇总 finding、错误、网络请求、缓存、403 预算与报告路径。
+
+渲染细节：
+
+- banner 用 `#` 组成的块状字输出 `SURFACESCOPE`，随后一行版本与定位语；
+- `finger` 阶段以表格输出（`STATUS / CONF / TECHNOLOGY / SOURCES / EVIDENCE / TARGET`），
+  多来源 finding 在 `SOURCES` 列显示 `sources=N`；
+- `dirsearch` 的路径 finding 只显示相对路径（如 `/admin/`），不重复打印整条 URL；
+- 实时进度行写到 **stderr**，因此 `surfacescope ... > report.txt` 的重定向输出仍然干净；
+  非 TTY（管道、CI）自动不输出进度。
+
+终端渲染器是只读展示层，不解析目标、不发包、不改变 `PipelineResult`。
 
 ## Exit codes
 

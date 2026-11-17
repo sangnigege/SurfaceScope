@@ -3,6 +3,13 @@
 The renderer is intentionally dependency-free and never reads request bodies,
 cookies or authorization values. It is a presentation layer only: findings,
 stats and errors remain owned by ``PipelineResult``.
+
+Two entry points exist:
+
+* :func:`render_scan_result` renders a completed run as one string (used by
+  tests and by callers that buffer output).
+* :class:`ConsoleStream` writes the same blocks incrementally so a long scan
+  reports each component as soon as it finishes instead of waiting for the end.
 """
 
 from __future__ import annotations
@@ -11,6 +18,7 @@ import ctypes
 import os
 import sys
 from typing import TYPE_CHECKING, Any, TextIO
+from urllib.parse import urlsplit
 
 from . import __version__
 
@@ -35,6 +43,30 @@ _LIMIT_FLAGS = (
     ("request_limit_reached", "stage request limit reached"),
     ("probe_limit_reached", "endpoint probe limit reached"),
 )
+
+# 3x5 block glyphs so the banner stays readable on legacy Windows consoles.
+_GLYPHS: dict[str, tuple[str, ...]] = {
+    "A": (" ### ", "#   #", "#####", "#   #", "#   #"),
+    "C": (" ####", "#    ", "#    ", "#    ", " ####"),
+    "E": ("#####", "#    ", "#### ", "#    ", "#####"),
+    "F": ("#####", "#    ", "#### ", "#    ", "#    "),
+    "O": (" ### ", "#   #", "#   #", "#   #", " ### "),
+    "P": ("#### ", "#   #", "#### ", "#    ", "#    "),
+    "R": ("#### ", "#   #", "#### ", "#  # ", "#   #"),
+    "S": ("#####", "#    ", "#### ", "    #", "#####"),
+    "U": ("#   #", "#   #", "#   #", "#   #", "#####"),
+    " ": ("     ", "     ", "     ", "     ", "     "),
+}
+_BANNER_WORD = "SURFACESCOPE"
+
+
+def _banner_art() -> list[str]:
+    rows = [""] * 5
+    for index, letter in enumerate(_BANNER_WORD):
+        glyph = _GLYPHS.get(letter, _GLYPHS[" "])
+        for row in range(5):
+            rows[row] += ("" if index == 0 else " ") + glyph[row]
+    return ["  " + row.rstrip() for row in rows]
 
 
 class _Palette:
@@ -136,6 +168,22 @@ def _evidence(finding: Finding, limit: int = 220) -> str:
     return _clean(finding.evidence, limit)
 
 
+def _display_target(finding: Finding) -> str:
+    """Show a path relative to its source target when the origins match."""
+
+    base = str(getattr(finding, "source_target", "") or "")
+    if not base:
+        return _clean_target(finding)
+    candidate = urlsplit(finding.target)
+    origin = urlsplit(base)
+    if (candidate.scheme, candidate.netloc) == (origin.scheme, origin.netloc):
+        path = candidate.path or "/"
+        if candidate.query:
+            path += "?" + candidate.query
+        return _clean(path, 500)
+    return _clean_target(finding)
+
+
 def _finding_line(finding: Finding, palette: _Palette) -> str:
     module = finding.module
     kind = finding.kind
@@ -146,7 +194,7 @@ def _finding_line(finding: Finding, palette: _Palette) -> str:
     metadata = finding.metadata if isinstance(finding.metadata, dict) else {}
 
     if module == "dirsearch" and kind == "path":
-        return f"{status_badge} {size:>8}  {target}  conf={confidence}"
+        return f"{status_badge} {size:>8}  {_display_target(finding)}  conf={confidence}"
 
     if module == "jsfinder":
         if kind == "js_asset":
@@ -311,6 +359,57 @@ def _stat_text(name: str, stats: dict[str, Any]) -> str:
     return "  ".join(parts)
 
 
+def _render_table(headers: list[str], rows: list[list[str]], indent: str = "    ") -> list[str]:
+    """Render an aligned plain-text table that stays inside 120 columns."""
+
+    if not rows:
+        return []
+    widths = [len(header) for header in headers]
+    for row in rows:
+        for index, cell in enumerate(row):
+            widths[index] = max(widths[index], len(cell))
+    max_width = 118 - len(indent)
+    while sum(widths) + 2 * (len(widths) - 1) > max_width:
+        widest = max(range(len(widths)), key=lambda index: widths[index])
+        if widths[widest] <= 8:
+            break
+        widths[widest] -= 1
+
+    def fit(cell: str, width: int) -> str:
+        if len(cell) > width:
+            return cell[: max(0, width - 3)] + "..."
+        return cell.ljust(width)
+
+    lines = [indent + "  ".join(fit(header, widths[index]) for index, header in enumerate(headers)).rstrip()]
+    lines.append(indent + "  ".join("-" * width for width in widths))
+    for row in rows:
+        lines.append(indent + "  ".join(fit(cell, widths[index]) for index, cell in enumerate(row)).rstrip())
+    return lines
+
+
+def _finger_table(findings: list[Finding], palette: _Palette) -> list[str]:
+    headers = ["STATUS", "CONF", "TECHNOLOGY", "SOURCES", "EVIDENCE", "TARGET"]
+    rows: list[list[str]] = []
+    for finding in findings:
+        metadata = finding.metadata if isinstance(finding.metadata, dict) else {}
+        status = _finding_status(finding)
+        cms = _clean(metadata.get("cms") or "unknown", 60)
+        version = _clean(metadata.get("version") or "", 30)
+        technology = f"[{cms}{' ' + version if version else ''}]"
+        sources = _source_count(finding)
+        rows.append(
+            [
+                str(status) if status else "-",
+                f"{float(finding.confidence):.2f}",
+                technology,
+                f"sources={sources}" if sources > 1 else "-",
+                _evidence(finding, 48) or "-",
+                _clean_target(finding),
+            ]
+        )
+    return _render_table(headers, rows)
+
+
 def _render_component(index: int, name: str, result: ComponentResult, palette: _Palette) -> list[str]:
     title = _COMPONENT_TITLES.get(name, name.upper())
     state = palette.green("OK") if result.ok else palette.red(f"ERRORS ({len(result.errors)})")
@@ -319,12 +418,15 @@ def _render_component(index: int, name: str, result: ComponentResult, palette: _
     stat_text = _stat_text(name, stats)
     if stat_text:
         lines.append("    " + palette.dim(stat_text))
-    for finding in result.findings:
-        line = _finding_line(finding, palette)
-        source_count = _source_count(finding)
-        if source_count > 1:
-            line += "  " + palette.dim(f"sources={source_count}")
-        lines.append("    " + line)
+    if name == "finger" and result.findings:
+        lines.extend(_finger_table(result.findings, palette))
+    else:
+        for finding in result.findings:
+            line = _finding_line(finding, palette)
+            source_count = _source_count(finding)
+            if source_count > 1:
+                line += "  " + palette.dim(f"sources={source_count}")
+            lines.append("    " + line)
     if not result.findings:
         lines.append("    " + palette.dim("(no findings)"))
     for key, label in _LIMIT_FLAGS:
@@ -332,6 +434,27 @@ def _render_component(index: int, name: str, result: ComponentResult, palette: _
             lines.append("    " + palette.yellow(f"[!] {label}"))
     for error in result.errors:
         lines.append("    " + palette.red(f"[!] {_clean(error, 280)}"))
+    return lines
+
+
+def _render_header(meta: dict[str, Any], palette: _Palette) -> list[str]:
+    lines = [palette.bold(""), *[palette.bold(row) for row in _banner_art()], ""]
+    lines.append(
+        "  "
+        + palette.bold(f"SurfaceScope {__version__}")
+        + palette.dim("  unified web attack surface assessment")
+    )
+    targets = meta.get("targets") or []
+    if targets:
+        lines.append("  " + palette.dim("targets: " + ", ".join(_clean(item, 500) for item in targets)))
+    run_id = _clean(meta.get("run_id") or "-", 100)
+    profile = _clean(meta.get("profile") or "-", 100)
+    lines.append(f"  {palette.dim('run:')} {run_id}  {palette.dim('profile:')} {profile}")
+    components = meta.get("components") or []
+    if components:
+        lines.append(
+            f"  {palette.dim('components:')} " + ", ".join(_clean(item, 80) for item in components)
+        )
     return lines
 
 
@@ -404,16 +527,8 @@ def render_scan_result(result: PipelineResult, *, color: bool = False) -> str:
 
     palette = _Palette(color)
     meta = result.run_meta or {}
-    lines = [palette.bold(f"SurfaceScope {__version__}")]
-    targets = meta.get("targets") or []
-    if targets:
-        lines.append("  " + palette.dim("targets: " + ", ".join(_clean(item, 500) for item in targets)))
-    run_id = _clean(meta.get("run_id") or result.run_id, 100)
-    profile = _clean(meta.get("profile") or "-", 100)
+    lines = _render_header(meta, palette)
     components = meta.get("components") or list((result.component_results or {}).keys())
-    lines.append(f"  {palette.dim('run:')} {run_id}  {palette.dim('profile:')} {profile}")
-    lines.append(f"  {palette.dim('components:')} {', '.join(_clean(item, 80) for item in components)}")
-
     component_results = result.component_results or {}
     ordered = [name for name in components if name in component_results]
     if not ordered:
@@ -438,4 +553,62 @@ def write_scan_result(
     target_stream.flush()
 
 
-__all__ = ["render_scan_result", "write_scan_result"]
+class ConsoleStream:
+    """Incremental writer so each finished component prints immediately."""
+
+    def __init__(
+        self,
+        stream: TextIO | None = None,
+        *,
+        color: bool | None = None,
+        progress_stream: TextIO | None = None,
+        progress_interval: int = 500,
+    ) -> None:
+        self.stream = stream or sys.stdout
+        self.color = _ansi_enabled(self.stream) if color is None else bool(color)
+        self.palette = _Palette(self.color)
+        self.progress_stream = progress_stream or sys.stderr
+        self.progress_interval = max(1, int(progress_interval))
+        self._progress_visible = False
+
+    def _write(self, text: str) -> None:
+        self.stream.write(text)
+        self.stream.flush()
+
+    def header(self, meta: dict[str, Any]) -> None:
+        self._write("\n".join(_render_header(meta, self.palette)) + "\n")
+
+    def component(self, index: int, name: str, result: ComponentResult) -> None:
+        self.clear_progress()
+        self._write("\n".join(_render_component(index, name, result, self.palette)) + "\n")
+
+    def summary(self, result: PipelineResult) -> None:
+        self.clear_progress()
+        self._write("\n".join(_render_summary(result, self.palette)) + "\n")
+
+    def progress(self, name: str, done: int, total: int) -> None:
+        if not bool(getattr(self.progress_stream, "isatty", lambda: False)()):
+            return
+        total = max(0, int(total))
+        if done != total and done % self.progress_interval:
+            return
+        percent = f"{100.0 * done / total:.0f}%" if total else "-"
+        line = f"  {name} {done}/{total or '?'}  ({percent})"
+        self.progress_stream.write("\r" + line.ljust(60))
+        self.progress_stream.flush()
+        self._progress_visible = True
+
+    def clear_progress(self) -> None:
+        if not self._progress_visible:
+            return
+        self.progress_stream.write("\r" + " " * 60 + "\r")
+        self.progress_stream.flush()
+        self._progress_visible = False
+
+
+__all__ = [
+    "ConsoleStream",
+    "evidence_marker",
+    "render_scan_result",
+    "write_scan_result",
+]

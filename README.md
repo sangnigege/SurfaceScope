@@ -30,8 +30,16 @@ surfacescope --version
 ```
 
 两种方式都会把 `surfacescope`、`sscope`、`dsbp` 三个命令装进独立虚拟环境并放上 PATH，
-不污染系统 Python。升级用 `uv tool upgrade surfacescope` 或 `pipx reinstall surfacescope`；
-卸载用 `uv tool uninstall surfacescope` 或 `pipx uninstall surfacescope`。
+不污染系统 Python。卸载用 `uv tool uninstall surfacescope` 或 `pipx uninstall surfacescope`。
+
+升级要区分安装方式（`git+https://` 安装会被固定在某个提交上，**普通的 upgrade 命令不会拉新**）：
+
+| 安装方式 | 升级命令 |
+|---|---|
+| uv tool（git 源） | `uv tool install --force --reinstall "git+https://github.com/sangnigege/SurfaceScope.git@main"` |
+| pipx（git 源） | `pipx reinstall surfacescope` |
+| 源码开发 | `git pull && .\.venv\Scripts\python -m pip install -e .` |
+| 只想知道有没有新版 | `surfacescope --check-update`（只查询，不安装） |
 
 > 尚未发布到 PyPI，暂时不能 `pipx install surfacescope`；请使用上面带 `git+https://` 的写法。
 > 需要锁定版本时把 `@main` 换成具体 tag 或 commit hash。
