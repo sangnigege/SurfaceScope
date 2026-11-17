@@ -1,13 +1,10 @@
 # SurfaceScope
 
-> 一个 Python 包，完成 Web 攻击面评估：目录发现 → JS/API 提取 → 指纹识别 → 403/401 复核 →
-> Swagger 分析 → Packer 分析 → 统一报告。
+> 一个工具，完成 Web 攻击面评估：目录发现 → JS/API 提取 → 指纹识别 → 403/401 复核 → Swagger 分析 → Packer 分析 → 统一报告。
 
 [![ci](https://github.com/sangnigege/SurfaceScope/actions/workflows/ci.yml/badge.svg)](https://github.com/sangnigege/SurfaceScope/actions/workflows/ci.yml)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
-
-当前公开版本：`0.2.0`　·　命令 `surfacescope` / `sscope`　·　包名 `surfacescope`
 
 > ⚠️ 仅用于你拥有或已取得明确书面授权的目标。默认只做低风险发现，主动探测必须显式开启。
 
@@ -73,7 +70,7 @@ python -m venv .venv
 .\.venv\Scripts\surfacescope --version
 ```
 
-Linux/WSL 用 `.venv/bin/python` 和 `.venv/bin/surfacescope`。**一个项目环境即可**，不需要为每个组件单独建 venv。
+Linux/WSL 用 `.venv/bin/python` 和 `.venv/bin/surfacescope`。
 
 ## 30 秒上手
 
@@ -160,7 +157,6 @@ docs/           # 用户文档、开发文档、兼容性说明
 | Windows | 本地验证 3.10–3.14 |
 | Linux/WSL | 本地验证 3.10 / 3.14 |
 | CI | Ubuntu + Python 3.12，每次推送跑测试、文档、资产与卫生门禁 |
-| macOS | 未做原生验证，不作承诺 |
 | 打包 | 纯 Python wheel，无 C/Rust 扩展，无需编译 |
 | 外部依赖 | 不需要 ChromeDriver、EHole、Selenium 或组件 venv |
 
@@ -201,5 +197,4 @@ loopback fixture，**不要在单元/契约/CI 里扫描真实目标**。贡献�
 
 ## 致谢
 
-第三方来源与致谢记录在 [`NOTICE.md`](NOTICE.md) 和 `src/surfacescope/assets/manifest.json`。
-SurfaceScope 不依赖上游仓库的运行时目录或组件 checkout。
+第三方来源与致谢记录在 [`NOTICE.md`](NOTICE.md) 。
