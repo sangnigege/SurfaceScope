@@ -54,7 +54,11 @@ def _default_candidates() -> list[Path]:
     candidates.append(Path.home() / ".cache" / "surfacescope" / "tmp")
     if os.name != "nt":
         candidates.extend((Path("/tmp"), Path("/var/tmp")))
-    candidates.append(Path.cwd().parent)
+    if os.environ.get("SURFACESCOPE_ALLOW_CWD_PARENT_TMP") == "1":
+        # Opt-in escape hatch for restricted environments where every standard temp
+        # location is unwritable. Off by default so a project's parent directory never
+        # collects `surfacescope-*` directories by accident.
+        candidates.append(Path.cwd().parent)
     return candidates
 
 

@@ -105,6 +105,9 @@ title = "surfacescope scan"
 `SURFACESCOPE_*` 未设置时会回退读取对应的旧 `DSBP_*` 变量；新配置应只使用
 `SURFACESCOPE_*`，旧前缀计划在 `1.0` 前移除。`--no-env` 同时禁用两套前缀。
 
+`SURFACESCOPE_ALLOW_CWD_PARENT_TMP=1` 是受限环境的逃生口：只有当标准临时目录全部
+不可写时，才允许把当前目录的父目录作为临时根。默认关闭，避免在项目父目录里积累
+`surfacescope-*` 目录。
 ## Proxies
 
 HTTP 出口只使用显式代理：全局 `--proxy` 或 target 文件中的 `proxy`。执行器不读取

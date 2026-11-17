@@ -15,6 +15,9 @@ the spirit of Keep a Changelog, and versions use PEP 440.
   surface.
 - Rewrote the README with a capability map, scenario table, configuration summary and a
   documentation index.
+- Made the `Path.cwd().parent` temporary fallback opt-in via `SURFACESCOPE_ALLOW_CWD_PARENT_TMP=1`,
+  so restricted environments no longer scatter `surfacescope-*` directories beside the
+  project by default.
 
 ## 0.2.0 - 2026-11-16
 

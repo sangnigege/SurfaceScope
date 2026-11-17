@@ -2,7 +2,12 @@ from __future__ import annotations
 
 import pytest
 
-from surfacescope.tempdirs import TemporaryDirectoryError, make_temp_dir, select_temp_parent
+from surfacescope.tempdirs import (
+    TemporaryDirectoryError,
+    _default_candidates,
+    make_temp_dir,
+    select_temp_parent,
+)
 
 
 def test_select_temp_parent_skips_excluded_candidate(tmp_path) -> None:
@@ -39,3 +44,13 @@ def test_select_temp_parent_rejects_unusable_candidates(tmp_path) -> None:
 
     with pytest.raises(TemporaryDirectoryError, match="no writable temporary directory"):
         select_temp_parent(exclude=[work], candidates=[work, not_a_directory])
+
+def test_cwd_parent_fallback_is_opt_in(tmp_path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("SURFACESCOPE_ALLOW_CWD_PARENT_TMP", raising=False)
+    default_paths = [path.resolve() for path in _default_candidates()]
+    assert tmp_path.parent.resolve() not in default_paths
+
+    monkeypatch.setenv("SURFACESCOPE_ALLOW_CWD_PARENT_TMP", "1")
+    opt_in_paths = [path.resolve() for path in _default_candidates()]
+    assert tmp_path.parent.resolve() in opt_in_paths
