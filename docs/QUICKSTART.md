@@ -2,6 +2,16 @@
 
 ## 1. Install
 
+只运行、不改代码时，用 uv 或 pipx 装到独立环境（推荐）：
+
+```bash
+uv tool install "git+https://github.com/sangnigege/SurfaceScope.git@main"
+# 或
+pipx install "git+https://github.com/sangnigege/SurfaceScope.git@main"
+```
+
+源码开发时用可编辑安装：
+
 ```powershell
 python -m pip install -e .
 surfacescope --version
@@ -9,7 +19,8 @@ surfacescope --list-components
 surfacescope --list-assets
 ```
 
-需要 Python 3.10 或更高版本。不要为组件创建单独 venv；所有扫描组件共享同一包和同一请求执行器。
+需要 Python 3.10 或更高版本。包尚未发布到 PyPI，安装时必须带 `git+https://` 前缀；
+锁定版本时把 `@main` 换成具体 tag 或 commit hash。不要为组件创建单独 venv；所有扫描组件共享同一包和同一请求执行器。
 `sscope` 是 `surfacescope` 的短别名；`dsbp` 仅用于过渡期兼容，新脚本应使用规范命令。
 
 ## 2. Safe first run

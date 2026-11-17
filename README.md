@@ -64,7 +64,28 @@ flowchart LR
 
 ## 安装
 
-需要 Python 3.10 或更高版本。
+需要 Python 3.10 或更高版本。两种方式按用途选一个。
+
+### 方式一：uv / pipx（推荐，只运行不开发）
+
+```bash
+# uv：安装到独立工具环境，速度快
+uv tool install "git+https://github.com/sangnigege/SurfaceScope.git@main"
+
+# pipx：等价方案
+pipx install "git+https://github.com/sangnigege/SurfaceScope.git@main"
+
+surfacescope --version
+```
+
+两种方式都会把 `surfacescope`、`sscope`、`dsbp` 三个命令装进独立虚拟环境并放上 PATH，
+不污染系统 Python。升级用 `uv tool upgrade surfacescope` 或 `pipx reinstall surfacescope`；
+卸载用 `uv tool uninstall surfacescope` 或 `pipx uninstall surfacescope`。
+
+> 尚未发布到 PyPI，暂时不能 `pipx install surfacescope`；请使用上面带 `git+https://` 的写法。
+> 需要锁定版本时把 `@main` 换成具体 tag 或 commit hash。
+
+### 方式二：源码开发（可编辑安装）
 
 ```powershell
 python -m venv .venv
