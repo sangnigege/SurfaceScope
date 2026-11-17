@@ -11,8 +11,10 @@ algorithms, configuration formats or rule sets informed this project.
                             prior 403/401 review workflow this project grew out of
 - Finger                    https://github.com/sangnigege/Finger
                             fingerprint rule snapshot (assets/fingerprints)
-- bypass403                 Sangnigege
+- nomore403                 https://github.com/devploit/nomore403
                             403 bypass payload catalog (assets/bypass403)
+- 403bypasser               https://github.com/yunemse48/403bypasser
+                            additional 403 bypass payload ideas
 - JSFinder                  JavaScript endpoint extraction ideas
 - swagger-exp / swagger-hack
                             Swagger/OpenAPI parsing and request generation ideas
