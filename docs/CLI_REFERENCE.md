@@ -161,7 +161,7 @@ secret、upload marker、API surface 和 Finger 规则属于被动分析，不�
 
 渲染细节：
 
-- banner 用 `#` 组成的块状字输出 `SURFACESCOPE`，随后一行版本与定位语；
+- banner 用 figlet `standard` 字形输出 `SurfaceScope`（纯 ASCII，任何控制台都能显示），随后一行版本与定位语；
 - `finger` 阶段以表格输出（`STATUS / CONF / TECHNOLOGY / SOURCES / EVIDENCE / TARGET`），
   多来源 finding 在 `SOURCES` 列显示 `sources=N`；
 - `dirsearch` 的路径 finding 只显示相对路径（如 `/admin/`），不重复打印整条 URL；
