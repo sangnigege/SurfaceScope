@@ -46,8 +46,6 @@ def check_wheel(path: Path) -> list[str]:
             errors.append(f"wheel contains forbidden path: {name}")
     required = (
         ("surfacescope/assets/manifest.json",),
-        ("licenses/NOTICE.md",),
-        ("licenses/THIRD_PARTY_LICENSES.txt",),
     )
     for suffixes in required:
         if not any(_required_suffix(name, suffixes) for name in names):
@@ -64,8 +62,6 @@ def check_sdist(path: Path) -> list[str]:
             errors.append(f"sdist contains forbidden path: {name}")
     required_suffixes = (
         "pyproject.toml",
-        "NOTICE.md",
-        "THIRD_PARTY_LICENSES.txt",
         "src/surfacescope/assets/manifest.json",
     )
     for suffix in required_suffixes:

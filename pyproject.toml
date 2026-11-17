@@ -8,8 +8,6 @@ version = "0.2.0"
 description = "SurfaceScope: unified web attack surface assessment pipeline for discovery, fingerprints, JS, 403 review, Swagger and Packer analysis"
 readme = "README.md"
 requires-python = ">=3.10"
-license = "LicenseRef-Proprietary"
-license-files = ["NOTICE.md", "THIRD_PARTY_LICENSES.txt"]
 authors = [{name = "SurfaceScope maintainers"}]
 keywords = ["security", "pentest", "attack-surface", "dirsearch", "fingerprint", "swagger", "webpack"]
 classifiers = [

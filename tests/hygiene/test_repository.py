@@ -130,7 +130,8 @@ def test_project_identity_is_surfacescope() -> None:
     scripts = project["project"]["scripts"]
 
     assert project["project"]["name"] == "surfacescope"
-    assert project["project"]["license-files"] == ["NOTICE.md", "THIRD_PARTY_LICENSES.txt"]
+    assert "license" not in project["project"]
+    assert "license-files" not in project["project"]
     assert (ROOT / "THIRD_PARTY_LICENSES.txt").is_file()
     assert not (ROOT / "THIRD_PARTY_LICENSES").exists()
     assert "surfacescope*" in project["tool"]["setuptools"]["packages"]["find"]["include"]
