@@ -10,23 +10,68 @@
 
 > ⚠️ 仅用于你拥有或已取得明确书面授权的目标。默认只做低风险发现，主动探测必须显式开启。
 
-## 目录
 
-- [为什么用它](#为什么用它)
-- [能力总览](#能力总览)
-- [安装](#安装)
-- [30 秒上手](#30-秒上手)
-- [常用场景](#常用场景)
-- [403/401 复核](#403401-复核)
-- [报告](#报告)
-- [配置](#配置)
-- [项目结构](#项目结构)
-- [兼容性](#兼容性)
-- [开发](#开发)
-- [文档](#文档)
-- [致谢](#致谢)
+## 快速开始
 
-## 为什么用它
+### 安装
+
+需要 Python 3.10 或更高版本。两种方式按用途选一个。
+
+#### 方式一：uv / pipx（推荐，只运行不开发）
+
+```bash
+# uv：安装到独立工具环境，速度快
+uv tool install "git+https://github.com/sangnigege/SurfaceScope.git@main"
+
+# pipx：等价方案
+pipx install "git+https://github.com/sangnigege/SurfaceScope.git@main"
+
+surfacescope --version
+```
+
+两种方式都会把 `surfacescope`、`sscope`、`dsbp` 三个命令装进独立虚拟环境并放上 PATH，
+不污染系统 Python。升级用 `uv tool upgrade surfacescope` 或 `pipx reinstall surfacescope`；
+卸载用 `uv tool uninstall surfacescope` 或 `pipx uninstall surfacescope`。
+
+> 尚未发布到 PyPI，暂时不能 `pipx install surfacescope`；请使用上面带 `git+https://` 的写法。
+> 需要锁定版本时把 `@main` 换成具体 tag 或 commit hash。
+
+#### 方式二：源码开发（可编辑安装）
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python -m pip install -e .
+.\.venv\Scripts\surfacescope --version
+```
+
+Linux/WSL 用 `.venv/bin/python` 和 `.venv/bin/surfacescope`。
+
+### 30 秒上手
+
+```powershell
+# 1. 先干跑，确认目标、组件和预算，不发任何扫描请求
+surfacescope -u https://example.com/ --all --dry-run --no-env
+
+# 2. 默认只跑低风险三件套：目录发现 + JS 提取 + 指纹
+surfacescope -u https://example.com/
+
+# 3. 确认授权后再开全部阶段（403 仍用 fast，写方法/SQLi/unsafe Packer 不会自动开）
+surfacescope -u https://example.com/ --all
+```
+
+### 常用场景
+
+| 我想做什么 | 命令 |
+|---|---|
+| 只看有哪些组件和资产 | `surfacescope --list-components` / `--list-assets` |
+| 指定字典、扩展名和并发 | `surfacescope -u <url> --wordlist paths --extensions php,aspx,jsp --threads 25` |
+| 复核某个目录的 403 | `surfacescope -u <url>/admin --components bypass403 --bypass --bypass-mode fast` |
+| 一次拿到四种格式报告 | `surfacescope -u <url> --format json,markdown,html,csv --output reports` |
+| 用配置文件跑 | `surfacescope -u <url> --config .\surfacescope.toml --no-env` |
+
+## 能力
+
+### 为什么用它
 
 传统做法是把 dirsearch、JSFinder、指纹工具、403 绕过脚本、Swagger 扫描器各跑一遍，再手工拼报告。
 SurfaceScope 把这些能力收口到一个包里，共享同一套请求执行器、请求画像、结果模型和报告出口：
@@ -40,7 +85,7 @@ SurfaceScope 把这些能力收口到一个包里，共享同一套请求执行�
 
 核心设计：**一个 HTTP 边界、一个结果存储、一个报告出口**。新增能力只能通过适配器接入，不能另开一套请求实现。
 
-## 能力总览
+### 能力总览
 
 ```mermaid
 flowchart LR
@@ -62,63 +107,7 @@ flowchart LR
 | Swagger/OpenAPI | Swagger 2、OpenAPI 3.0/3.1、本地 `$ref` 和只读请求生成 | 关闭 |
 | Packer/webpack | chunk、API、secret、upload surface、CORS 和匿名访问分析 | 关闭 |
 
-## 安装
-
-需要 Python 3.10 或更高版本。两种方式按用途选一个。
-
-### 方式一：uv / pipx（推荐，只运行不开发）
-
-```bash
-# uv：安装到独立工具环境，速度快
-uv tool install "git+https://github.com/sangnigege/SurfaceScope.git@main"
-
-# pipx：等价方案
-pipx install "git+https://github.com/sangnigege/SurfaceScope.git@main"
-
-surfacescope --version
-```
-
-两种方式都会把 `surfacescope`、`sscope`、`dsbp` 三个命令装进独立虚拟环境并放上 PATH，
-不污染系统 Python。升级用 `uv tool upgrade surfacescope` 或 `pipx reinstall surfacescope`；
-卸载用 `uv tool uninstall surfacescope` 或 `pipx uninstall surfacescope`。
-
-> 尚未发布到 PyPI，暂时不能 `pipx install surfacescope`；请使用上面带 `git+https://` 的写法。
-> 需要锁定版本时把 `@main` 换成具体 tag 或 commit hash。
-
-### 方式二：源码开发（可编辑安装）
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python -m pip install -e .
-.\.venv\Scripts\surfacescope --version
-```
-
-Linux/WSL 用 `.venv/bin/python` 和 `.venv/bin/surfacescope`。
-
-## 30 秒上手
-
-```powershell
-# 1. 先干跑，确认目标、组件和预算，不发任何扫描请求
-surfacescope -u https://example.com/ --all --dry-run --no-env
-
-# 2. 默认只跑低风险三件套：目录发现 + JS 提取 + 指纹
-surfacescope -u https://example.com/
-
-# 3. 确认授权后再开全部阶段（403 仍用 fast，写方法/SQLi/unsafe Packer 不会自动开）
-surfacescope -u https://example.com/ --all
-```
-
-## 常用场景
-
-| 我想做什么 | 命令 |
-|---|---|
-| 只看有哪些组件和资产 | `surfacescope --list-components` / `--list-assets` |
-| 指定字典、扩展名和并发 | `surfacescope -u <url> --wordlist paths --extensions php,aspx,jsp --threads 25` |
-| 复核某个目录的 403 | `surfacescope -u <url>/admin --components bypass403 --bypass --bypass-mode fast` |
-| 一次拿到四种格式报告 | `surfacescope -u <url> --format json,markdown,html,csv --output reports` |
-| 用配置文件跑 | `surfacescope -u <url> --config .\surfacescope.toml --no-env` |
-
-## 403/401 复核
+### 403/401 复核
 
 `fast` 是默认的低预算首轮，**不是"证明所有绕过都失败"的穷举模式**：
 
@@ -132,7 +121,9 @@ surfacescope -u https://example.com/ --all
 「候选上限」「生成候选」「首轮候选」和「网络请求数」是不同口径。多数统一拒绝场景下，
 `fast` 约产生 29 次请求；只有真实 2xx/3xx 差异才触发扩展。真实目标的命中率和误报率仍应按目标单独验证。
 
-## 报告
+## 使用与参考
+
+### 报告
 
 ```powershell
 surfacescope -u https://example.com/ --format json,markdown,html,csv --output reports
@@ -141,7 +132,7 @@ surfacescope -u https://example.com/ --format json,markdown,html,csv --output re
 所有格式共用同一个 `Finding` schema 和原子写入逻辑：先写临时文件再替换，失败不会留下半份结果。
 报告目录、中间产物和临时资产全部由命令行显式指定，不写入固定的 CWD 队列或数据库。
 
-## 配置
+### 配置
 
 默认配置在包内 `assets/config/defaults.toml`，可用 TOML 文件或环境变量覆盖：
 
@@ -156,7 +147,7 @@ surfacescope -u https://example.com/ --config .\surfacescope.toml --no-env
 TLS/HTTP2 指纹。完整参数见 [`docs/CLI_REFERENCE.md`](docs/CLI_REFERENCE.md)，
 配置项见 [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md)。
 
-## 项目结构
+### 项目结构
 
 ```text
 src/surfacescope/
@@ -172,7 +163,7 @@ tests/
 docs/           # 用户文档、开发文档、兼容性说明
 ```
 
-## 兼容性
+### 兼容性
 
 | 项 | 状态 |
 |---|---|
@@ -185,7 +176,9 @@ docs/           # 用户文档、开发文档、兼容性说明
 
 完整说明见 [`docs/COMPATIBILITY.md`](docs/COMPATIBILITY.md)。
 
-## 开发
+## 参与
+
+### 开发
 
 ```powershell
 .\.venv\Scripts\python -m pip install -e ".[dev]"
@@ -199,7 +192,7 @@ loopback fixture，**不要在单元/契约/CI 里扫描真实目标**。贡献�
 [`.github/CONTRIBUTING.md`](.github/CONTRIBUTING.md)，漏洞报告见
 [`.github/SECURITY.md`](.github/SECURITY.md)。
 
-## 文档
+### 文档
 
 | 文档 | 内容 |
 |---|---|
@@ -218,6 +211,6 @@ loopback fixture，**不要在单元/契约/CI 里扫描真实目标**。贡献�
 | [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md) | 目录与包结构说明 |
 | [`CHANGELOG.md`](CHANGELOG.md) | 版本变更 |
 
-## 致谢
+### 致谢
 
 第三方来源与致谢记录在 [`NOTICE.md`](NOTICE.md) 。
