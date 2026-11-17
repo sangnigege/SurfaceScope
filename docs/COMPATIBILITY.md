@@ -21,8 +21,8 @@ window. Support for 3.8 and 3.9 is not provided.
 
 | Environment | Status | Notes |
 |---|---|---|
-| Windows 11 | Verified locally | Python 3.10–3.14, 256 tests on each version |
-| Linux/WSL | Verified locally | Ubuntu/WSL Python 3.10.12 and 3.14.10, 256 tests; CI runs the required checks on Python 3.12 |
+| Windows 11 | Verified locally | Python 3.10–3.14, 268 tests on each version |
+| Linux/WSL | Verified locally | Ubuntu/WSL Python 3.10.12 and 3.14.10, 268 tests; CI runs the required checks on Python 3.12 |
 | macOS | Not verified | Code is platform-neutral, but no native macOS validation is claimed |
 
 Platform code uses `pathlib`, explicit UTF-8, `sys.executable` and temporary directories.

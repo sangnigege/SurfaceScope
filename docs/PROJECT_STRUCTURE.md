@@ -84,7 +84,7 @@ tests/
 ```
 
 Network tests use loopback servers. Do not scan real targets in tests or CI. The suite
-collects 256 tests at the time of this release.
+collects 268 tests at the time of this release.
 
 ## Assets
 
