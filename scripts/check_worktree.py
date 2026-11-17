@@ -44,9 +44,6 @@ SCOPE_FILES = frozenset(
         ".gitattributes",
         ".editorconfig",
         "NOTICE.md",
-        "dirsearch.py",
-        "single_403pass.py",
-        "swagger.py",
     }
 )
 GIT_LIST_COMMAND = (

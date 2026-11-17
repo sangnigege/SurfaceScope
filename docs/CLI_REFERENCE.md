@@ -165,6 +165,6 @@ secret、upload marker、API surface 和 Finger 规则属于被动分析，不�
 | `2` | 参数、配置、资产或运行时错误 |
 | `130` | 用户中断 |
 
-根入口 `dirsearch.py`、`single_403pass.py`、`swagger.py` 是统一 CLI 的兼容入口，
-会映射默认组件后调用同一 `main`；它们的 `--help` 返回 `0`，正常扫描遵循上表退出码。
+早期版本的根目录兼容入口 `dirsearch.py`、`single_403pass.py`、`swagger.py` 已移除；
+等价能力由 `surfacescope`（或 `sscope`、`dsbp` 别名）提供，退出码同上表。
 

@@ -33,11 +33,11 @@ python -m pip install -e ".[dev]"
 这是设计行为。扫描器只使用显式 `--proxy` 或 target 文件中的 `proxy`。读取系统代理会
 静默改写路径（例如把 `/admin;` 变成 `/admin`），影响 403 证据并可能把流量发往非预期出口。
 
-## 旧 `dirsearch.py` / `single_403pass.py` / `swagger.py` 参数不完全兼容
+## 旧的 `dirsearch.py` / `single_403pass.py` / `swagger.py` 入口已移除
 
-三个根入口现在是统一 CLI 的兼容 wrapper：`--help`、`--dry-run` 和正常扫描都可用，
-但只映射默认组件，不模拟上游脚本的全部旧参数。遇到未知参数时使用 `surfacescope --help`
-和 `docs/MIGRATION.md` 的映射；不要恢复旧参数解析器或组件私有 Session。
+这三个根脚本已在 0.2.x 移除，`python dirsearch.py ...` 会直接报找不到文件。请改用
+`surfacescope`（或 `sscope`、`dsbp` 别名），参数映射见 `docs/MIGRATION.md`；
+不要恢复旧参数解析器或组件私有 Session。
 
 ## 扫描没有发现 403 绕过
 

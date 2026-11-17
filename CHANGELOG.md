@@ -21,6 +21,12 @@ the spirit of Keep a Changelog, and versions use PEP 440.
   so restricted environments no longer scatter `surfacescope-*` directories beside the
   project by default.
 
+### Removed
+
+- Removed the root compatibility shims `dirsearch.py`, `single_403pass.py` and
+  `swagger.py` together with the `surfacescope.legacy` module; `surfacescope`, `sscope`
+  and `dsbp` are the only supported entry points.
+
 ## 0.2.0 - 2026-11-16
 
 ### Added

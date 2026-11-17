@@ -1,9 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
-import subprocess
-import sys
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -12,7 +9,6 @@ from surfacescope import pipeline
 from surfacescope.cli import _components_from_args, _targets_from_args, build_parser, main
 
 ROOT = Path(__file__).resolve().parents[2]
-
 
 def test_dry_run_validates_without_constructing_executor(monkeypatch, capsys) -> None:
     def fail_executor(*args, **kwargs):
@@ -28,7 +24,6 @@ def test_dry_run_validates_without_constructing_executor(monkeypatch, capsys) ->
     assert payload["profile"] == "chromium-desktop-stable"
     assert payload["asset_count"] == 11
 
-
 def test_dry_run_no_env_uses_defaults(monkeypatch, capsys) -> None:
     monkeypatch.setenv("SURFACESCOPE_THREADS", "7")
 
@@ -41,13 +36,11 @@ def test_dry_run_no_env_uses_defaults(monkeypatch, capsys) -> None:
     assert payload["config"]["reports"]["format"] == "json"
     assert payload["config"]["traffic"]["verify_tls"] is True
 
-
 def test_tls_verification_is_secure_by_default_and_insecure_is_opt_in(capsys) -> None:
     assert main(["--dry-run", "--no-env", "--insecure", "https://127.0.0.1:8443/"]) == 0
 
     payload = json.loads(capsys.readouterr().out)
     assert payload["config"]["traffic"]["verify_tls"] is False
-
 
 def test_explicit_cli_lists_replace_defaults_without_empty_values_winning(capsys) -> None:
     assert main(
@@ -65,7 +58,6 @@ def test_explicit_cli_lists_replace_defaults_without_empty_values_winning(capsys
     payload = json.loads(capsys.readouterr().out)
     assert payload["config"]["dirsearch"]["include_statuses"] == [200, 418]
     assert payload["config"]["dirsearch"]["exclude_statuses"] == [404]
-
 
 def test_cli_options_have_one_typed_config_path(capsys) -> None:
     assert main(
@@ -97,7 +89,6 @@ def test_cli_options_have_one_typed_config_path(capsys) -> None:
     assert config["traffic"]["follow_redirects"] is True
     assert config["traffic"]["max_redirects"] == 3
 
-
 def test_format_defaults_to_config_and_cli_override_is_resolved(capsys) -> None:
     assert main(["--dry-run", "--no-env", "http://127.0.0.1:8000/"]) == 0
     default_payload = json.loads(capsys.readouterr().out)
@@ -107,12 +98,10 @@ def test_format_defaults_to_config_and_cli_override_is_resolved(capsys) -> None:
     override_payload = json.loads(capsys.readouterr().out)
     assert override_payload["config"]["reports"]["format"] == "md,html"
 
-
 def test_dry_run_reports_unknown_profile(capsys) -> None:
     assert main(["--dry-run", "--no-env", "--profile", "missing-profile", "http://127.0.0.1:8000/"]) == 2
 
     assert "unknown request profile" in capsys.readouterr().err
-
 
 def test_bypass_stage_is_opt_in() -> None:
     parser = build_parser()
@@ -123,10 +112,8 @@ def test_bypass_stage_is_opt_in() -> None:
     assert "bypass403" not in _components_from_args(default_args)
     assert "bypass403" in _components_from_args(enabled_args)
 
-
 def test_cli_uses_surfacescope_program_name() -> None:
     assert build_parser().prog == "surfacescope"
-
 
 def test_windows_redirected_output_is_reconfigured_to_utf8(monkeypatch) -> None:
     class Stream:
@@ -152,14 +139,12 @@ def test_windows_redirected_output_is_reconfigured_to_utf8(monkeypatch) -> None:
     assert stdout.encoding_after == "utf-8/backslashreplace"
     assert stderr.encoding_after == "utf-8/backslashreplace"
 
-
 def test_bypass_mode_supports_explicit_full_depth() -> None:
     parser = build_parser()
 
     args = parser.parse_args(["--dry-run", "--bypass-mode", "full", "http://127.0.0.1:8000/"])
 
     assert args.bypass_mode == "full"
-
 
 def test_packer_active_flags_are_explicit_and_isolated() -> None:
     parser = build_parser()
@@ -176,7 +161,6 @@ def test_packer_active_flags_are_explicit_and_isolated() -> None:
     assert "packer" in _components_from_args(args)
     assert args.packer_active is True
     assert args.packer_sqli is True
-
 
 def test_target_file_keeps_same_url_in_separate_auth_scopes(tmp_path) -> None:
     target_file = tmp_path / "targets.json"
@@ -207,26 +191,6 @@ def test_target_file_keeps_same_url_in_separate_auth_scopes(tmp_path) -> None:
     assert targets[0].headers["Authorization"] == "Bearer a"
     assert targets[1].cookies["sid"] == "b"
 
-
-def test_root_entrypoints_run_without_pythonpath() -> None:
-    env = os.environ.copy()
-    env.pop("PYTHONPATH", None)
-    env["PYTHONIOENCODING"] = "utf-8"
-    for entrypoint in ("dirsearch", "single_403pass", "swagger"):
-        completed = subprocess.run(
-            [sys.executable, str(ROOT / f"{entrypoint}.py"), "--help"],
-            cwd=ROOT,
-            env=env,
-            check=False,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-            timeout=30,
-        )
-        assert completed.returncode == 0, completed.stderr
-        assert "usage: surfacescope" in completed.stdout
-
-
 def test_all_enables_six_components_with_safe_scan_defaults(capsys) -> None:
     assert main(["--dry-run", "--no-env", "--all", "http://127.0.0.1:8000/"]) == 0
 
@@ -248,7 +212,6 @@ def test_all_enables_six_components_with_safe_scan_defaults(capsys) -> None:
     assert selection["packer_active"] is False
     assert selection["packer_sqli"] is False
     assert selection["packer_probe_endpoints"] is False
-
 
 def test_all_respects_explicit_component_selection_and_negative_flags(capsys) -> None:
     assert main(

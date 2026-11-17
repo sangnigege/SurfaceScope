@@ -18,9 +18,6 @@ tests/
 scripts/
 docs/
 .github/            # workflows, issue templates, CONTRIBUTING.md, SECURITY.md
-dirsearch.py
-single_403pass.py
-swagger.py
 ```
 
 .github/workflows/ci.yml` runs the required test, documentation, asset and hygiene

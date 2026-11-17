@@ -1,14 +1,10 @@
 # Migration from the old root scripts
 
-旧入口 `dirsearch.py`、`single_403pass.py`、`swagger.py` 现在是统一 CLI 兼容入口：
+早期版本在仓库根目录提供过 `dirsearch.py`、`single_403pass.py`、`swagger.py` 三个兼容
+入口，**已在 0.2.x 移除**。它们当时只映射默认组件并转调统一 `surfacescope.cli:main`；
+现在请直接使用 `surfacescope`（`sscope`、`dsbp` 仍是别名）。
 
-- 只映射默认组件并调用 `surfacescope.cli:main`；
-- 复用同一参数解析、pipeline、RequestExecutor、报告和退出码；
-- `--help` 返回 `0`，`--dry-run` 和正常扫描可用；
-- 不创建 venv；
-- 不 clone 组件；
-- 不写 CWD 文件；
-- 不启动第二套扫描逻辑。
+下面的映射表用于把旧调用翻译成新命令。
 
 ## From `dirsearch_bypass403` / `dsbp` to SurfaceScope
 
@@ -41,7 +37,7 @@ SurfaceScope 作为全新公开发行版时，才考虑独立新仓库或 orphan
 
 ## Command mapping
 
-| Old | New |
+| Old（已移除） | New |
 |---|---|
 | `python dirsearch.py -u URL` | `surfacescope -u URL` |
 | `python dirsearch.py -u URL -b yes` | `surfacescope -u URL --bypass` |
@@ -81,6 +77,6 @@ SurfaceScope 作为全新公开发行版时，才考虑独立新仓库或 orphan
 4. 同一 URL 的多身份必须通过 `-T targets.json` 提供不同 `scope`，否则会按同一身份处理。
 5. 旧 ChromeDriver/Chrome 浏览器路径不再需要；Swagger 是纯 Python 解析。
 
-根入口本身可以直接运行，但只承载兼容默认值；需要新参数时应使用规范 `surfacescope`
-命令。不要把旧组件重新放回项目根目录，也不要恢复组件 venv、运行时 clone 或 CWD 队列。
+需要新参数时使用规范 `surfacescope` 命令；`dsbp`、`sscope` 两个别名仍在。不要把旧组件
+重新放回项目根目录，也不要恢复组件 venv、运行时 clone 或 CWD 队列。
 
