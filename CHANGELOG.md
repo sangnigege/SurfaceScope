@@ -3,7 +3,7 @@
 All notable user-facing changes to SurfaceScope are recorded here. The format follows
 the spirit of Keep a Changelog, and versions use PEP 440.
 
-## Unreleased
+## 0.3.0 - 2026-11-18
 
 ### Added
 

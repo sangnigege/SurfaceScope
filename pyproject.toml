@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "surfacescope"
-version = "0.2.0"
+version = "0.3.0"
 description = "SurfaceScope: unified web attack surface assessment pipeline for discovery, fingerprints, JS, 403 review, Swagger and Packer analysis"
 readme = "README.md"
 requires-python = ">=3.10"

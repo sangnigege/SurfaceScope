@@ -115,7 +115,7 @@ being tracked, but it does not remove objects that already exist in Git history.
    build outputs and reports.
 2. Run the full checks from that snapshot, then create the first commit on `main`.
 3. Add the new GitHub repository as `origin`, push `main`, and wait for all Actions jobs.
-4. Create `v0.2.0` only after the first green CI run, then attach the wheel, sdist and
+4. Create the `vX.Y.Z` tag only after the first green CI run, then attach the wheel, sdist and
    SHA-256 checksums to the GitHub release.
 
 Do not rewrite the only copy of an existing repository with `git filter-repo`, BFG or a

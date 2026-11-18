@@ -5,7 +5,7 @@ from typing import Any
 
 import pytest
 
-from surfacescope import cli
+from surfacescope import __version__, cli
 
 
 class _Response:
@@ -32,7 +32,7 @@ def test_version_key_orders_tags() -> None:
 
 
 def test_check_update_reports_up_to_date(monkeypatch, capsys) -> None:
-    _patch_urlopen(monkeypatch, [{"name": "v0.2.0"}])
+    _patch_urlopen(monkeypatch, [{"name": f"v{__version__}"}])
     monkeypatch.setattr(cli, "_installed_via", lambda: "uv")
 
     assert cli._check_update() == 0
@@ -43,13 +43,13 @@ def test_check_update_reports_up_to_date(monkeypatch, capsys) -> None:
 
 
 def test_check_update_prints_upgrade_hint_for_uv(monkeypatch, capsys) -> None:
-    _patch_urlopen(monkeypatch, [{"name": "v0.1.0"}, {"name": "v0.9.0"}])
+    _patch_urlopen(monkeypatch, [{"name": "v0.1.0"}, {"name": "v99.0.0"}])
     monkeypatch.setattr(cli, "_installed_via", lambda: "uv")
 
     assert cli._check_update() == 0
 
     output = capsys.readouterr().out
-    assert "v0.9.0" in output
+    assert "v99.0.0" in output
     assert "uv tool install --force --reinstall" in output
 
 

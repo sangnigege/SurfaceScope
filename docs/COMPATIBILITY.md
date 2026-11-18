@@ -1,6 +1,6 @@
 # Compatibility
 
-SurfaceScope `0.2.0` is a pure-Python package. It does not require a compiler, a Rust
+SurfaceScope `0.3.0` is a pure-Python package. It does not require a compiler, a Rust
 toolchain, a browser driver or a component-local virtual environment.
 
 ## Python
